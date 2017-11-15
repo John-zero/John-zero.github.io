@@ -1,4 +1,3 @@
-
 ---
 layout:     	post
 title:        	"Redis Slowlog"
@@ -12,18 +11,15 @@ tags:
 ---
 
 
-# Redis 慢查询 SLOWLOG
+Redis 慢查询 SLOWLOG
 
-</br>
-
-* <a href="https://redis.io/commands/slowlog" target="_blank">官网 SLOWLOG 命令</a>
+<a href="https://redis.io/commands/slowlog" target="_blank">官网 SLOWLOG 命令</a>
 
 	日期 		| 更新记录
 	------------|-----------------------
 	2017-11-08	| 初始化 慢查询 SLOWLOG
 
 ***
-</br>
 
 ## **命令执行过程**
 
