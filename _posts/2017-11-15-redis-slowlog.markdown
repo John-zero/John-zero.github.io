@@ -29,13 +29,13 @@ tags:
 		
 ## 配置参数设置
 			
-	1. slowlog-log-slower-than (预设阈值, 单位: 微妙, 默认 10000 [10秒], [1秒 = 1000毫秒 = 1000000微妙])
+	1. slowlog-log-slower-than (预设阈值, 单位: 微妙, 默认 10000[10秒], [1秒 = 1000毫秒 = 1000000微妙])
 	
-	slowlog-log-slower-than 10000
+		slowlog-log-slower-than 10000
 
 	2. slowlog-max-len (慢查询最大记录数, 默认 128)
 	
-	slowlog-max-len 128
+		slowlog-max-len 128
 		
 ***
 		
