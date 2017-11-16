@@ -12,11 +12,11 @@ baseurl: ""                             # for example, '/blog' if your blog host
 
 # SNS settings
 RSS: false
-weibo_username:     John-zero
-zhihu_username:     John-zero
-github_username:    John-zero
-twitter_username:   John-zero
-#facebook_username:  John-zero
+# weibo_username:     John-zero
+# zhihu_username:     John-zero
+# github_username:    John-zero
+# twitter_username:   John-zero
+# facebook_username:  John-zero
 # linkedin_username:  firstname-lastname-idxxxx
 
 
@@ -60,8 +60,8 @@ netease_comment: false
 # ba_track_id: [your track id]
 
 # Google Analytics
-ga_track_id: 'UA-20171115-0'            # Format: UA-xxxxxx-xx
-ga_domain: john-zero.github.io
+# ga_track_id: 'UA-20171115-0'            # Format: UA-xxxxxx-xx
+# ga_domain: john-zero.github.io
 
 
 
