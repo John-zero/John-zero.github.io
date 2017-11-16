@@ -1,7 +1,7 @@
 ---
 layout:       post
 title:        "Redis"
-subtitle:     "Upgrading Ele.me to Progressive Web App"
+subtitle:     "Redis 相关整理"
 date:         2017-11-15 16:00:00
 author:       "John-zero"
 header-img:   "img/in-post/post-eleme-pwa/eleme-at-io.jpg"
@@ -13,6 +13,25 @@ tags:
     - 缓存
 ---
 
-### Redis
+
+
+## Redis
 	
-	K-V 高性能缓存服务
+* <a href="https://redis.io/" target="_blank">Redis (官网)</a>
+* <a href="https://github.com/xetorthio/jedis" target="_blank">Jedis (GitHub)</a> 
+* <a href="https://redisson.org/" target="_blank">Redisson (官网)</a> <a href="https://github.com/redisson/redisson" target="_blank">(GitHub)</a> 
+
+***	
+	
+## Another:
+
+* 搜狐视频 (sohu tv) Redis 私有云平台 <a href="https://github.com/sohutv/cachecloud" target="_blank">(GitHub)</a> <a href="http://cachecloud.github.io/" target="_blank">(GitHub Blog)</a>  	
+
+***
+
+## Redis Basic:
+
+* <a href="https://redis.io/topics/config" target="_blank">配置文件</a> 
+* <a href="https://redis.io/topics/protocol" target="_blank">协议</a>  
+
+***
