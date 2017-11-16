@@ -5,26 +5,11 @@ subtitle:   	"单机, 哨兵, 集群"
 date:       	2017-11-16
 author:       	"John-zero"
 header-img: 	"img/post-bg-js-module.jpg"
-catalog: 		true
+catalog: 		false
 tags:
     - Redis
     - 缓存
 ---
-
-
-
-### Catalog
-
-- Redis Standalone (单机)
-	- 安装
-	- 配置文件
-	- 运行
-		- 源码运行
-		- Docker 运行
-	- 连接
-	- 停止	
-- Redis Sentinel (哨兵)
-- Redis Cluster (集群)
 
 
 
