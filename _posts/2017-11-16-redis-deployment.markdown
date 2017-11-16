@@ -33,7 +33,6 @@ tags:
 	
 	打开 redis.conf, 找到 # requirepass foobared, 去掉 #, 改为 requirepass 123456
 
-</br>
 	
 #### 运行
 
@@ -105,8 +104,7 @@ tags:
 		
 		redis-cli -h 127.0.0.1 -p 6379
 			配合授权命令: auth '123456' 也可以
-			
-</br>
+		
 
 #### 停止
 	
@@ -127,15 +125,12 @@ tags:
 			(不推荐强制杀死 Redis 服务, 会导致一些无法预测的情况)
 	
 ***		
-</br>
 
 ### Redis Sentinel (哨兵)
 
 ***
-</br>
 
 ### Redis Cluster (集群)
 
 ***
-</br>
 
