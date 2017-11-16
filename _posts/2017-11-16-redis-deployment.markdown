@@ -13,6 +13,21 @@ tags:
 
 
 
+### Catalog
+
+- Redis Standalone (单机)
+	- 安装
+	- 配置文件
+	- 运行
+		- 源码运行
+		- Docker 运行
+	- 连接
+	- 停止	
+- Redis Sentinel (哨兵)
+- Redis Cluster (集群)
+
+
+
 <a href="https://redis.io/download" target="_blank">官网 Download</a>
 
 
