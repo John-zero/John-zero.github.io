@@ -12,7 +12,7 @@ tags:
 
 
 
-<a href="https://redis.io/commands/slowlog" target="_blank">官网 SLOWLOG 命令</a>
+<a href="https://redis.io/commands/slowlog" target="_blank">官网 SLOWLOG</a>
 
 ***
 

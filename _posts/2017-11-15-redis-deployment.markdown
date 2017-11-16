@@ -15,6 +15,7 @@ tags:
 
 <a href="https://redis.io/download" target="_blank">官网 Download</a>
 
+***
 
 ## Redis Standalone (单机)
 
