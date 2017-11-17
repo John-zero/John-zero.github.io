@@ -2,7 +2,7 @@
 layout:     	post
 title:        	"Redis Monitor"
 subtitle:     	"Redis 运维监控"
-date:         	2017-11-17
+date:         	2017-11-19
 author:       	"John-zero"
 header-img: 	"img/post-bg-android.jpg"
 tags:
@@ -14,8 +14,7 @@ tags:
 ## 单机监控项
 
 监控数据来源
-
-&#8194;&#8194; info 命令 <a href="https://redis.io/commands/info" target="_blank">(官网 info)</a> 
+	info 命令 <a href="https://redis.io/commands/info" target="_blank">(官网 info)</a> 
 	
 建议监控属性
 
@@ -50,10 +49,8 @@ Keyspace	| 								|
 			| db15							|
 			
 参考
-
-&#8194;&#8194; Open-Falcon Redis 监控脚本 <a href="https://github.com/iambocai/falcon-monit-scripts/tree/master/redis" target="_blank">redis-monitor</a>
- 
-&#8194;&#8194; Open-Falcon Redis 监控脚本 <a href="https://github.com/ZhuoRoger/redismon" target="_blank">redismon</a> 
+	Open-Falcon Redis 监控脚本 <a href="https://github.com/iambocai/falcon-monit-scripts/tree/master/redis" target="_blank">redis-monitor</a>
+	Open-Falcon Redis 监控脚本 <a href="https://github.com/ZhuoRoger/redismon" target="_blank">redismon</a> 
 	
 ***
 
@@ -77,5 +74,10 @@ keys      | mem      | clients | blocked | requests            | connections
 	该命令使用 scan 命令对 Redis 的键采样分析, 从中统计分析找到内存占用比较大的键值.
 
 ***
+
+## 更多监控等待挖掘...
+
+***
+
 	
 	
