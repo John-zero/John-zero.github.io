@@ -15,9 +15,9 @@ tags:
 
 **监控数据来源**
 
-	info 命令 <a href="https://redis.io/commands/info" target="_blank">(官网 info)</a> 
+&#8194;&#8194; info 命令 <a href="https://redis.io/commands/info" target="_blank">(官网 info)</a> 
 	
-建议监控属性
+**建议监控属性**
 
  类型 		| 属性 | 描述
 ------------|-------------------------------|---------------------------------------------------------------------------	
@@ -49,11 +49,11 @@ Keyspace	| 								|
 			| db...N						| keys=N,expires=N,avg_ttl=N (单位: 秒)
 			| db15							|
 			
-参考
+**参考**
 
-	Open-Falcon Redis 监控脚本 <a href="https://github.com/iambocai/falcon-monit-scripts/tree/master/redis" target="_blank">redis-monitor</a>
+&#8194;&#8194;Open-Falcon Redis 监控脚本 <a href="https://github.com/iambocai/falcon-monit-scripts/tree/master/redis" target="_blank">redis-monitor</a>
 	
-	Open-Falcon Redis 监控脚本 <a href="https://github.com/ZhuoRoger/redismon" target="_blank">redismon</a> 
+&#8194;&#8194;Open-Falcon Redis 监控脚本 <a href="https://github.com/ZhuoRoger/redismon" target="_blank">redismon</a> 
 	
 ***
 
