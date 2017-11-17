@@ -24,7 +24,7 @@ tags:
 Server 		| 								|
 Clients 	| 								|
 			| connected_clients 			| 已连接客户端的数量
-Momory 		| 								|
+Memory 		| 								|
 			| used_memory 					| 由 Redis 分配器分配的内存总量, 以字节 (byte) 为单位
 			| used_memory_rss 				| 从操作系统的角度, 返回 Redis 已分配的内存总量 (俗称常驻集大小)
 			| mem_fragmentation_ratio 		| used_memory_rss 和 used_memory 之间的比率
@@ -52,7 +52,14 @@ Keyspace	| 								|
 			| db1							|
 			| db...N						| keys=N,expires=N,avg_ttl=N (单位: 秒)
 			| db15							|
-			
+		
+**内存消耗**
+
+	重点关注 mem_fragmentation_ratio, 
+		当其值 > 1 时, 说明 used_memory_rss - used_memory 多出的部分被内存碎片消耗掉了
+		当其值 < 1 时, 一般可能是 Redis 内存交换 (Swap) 到硬盘导致, 也需要关注到
+		
+		
 **参考**
 
 &#8194;&#8194;Open-Falcon Redis 监控脚本 <a href="https://github.com/iambocai/falcon-monit-scripts/tree/master/redis" target="_blank">redis-monitor</a>
@@ -105,7 +112,7 @@ keys      | mem      | clients | blocked | requests            | connections
 	**内存**
 	**网络**
 	**磁盘**
-	**等待**
+	**等等**
 
 ***
 
