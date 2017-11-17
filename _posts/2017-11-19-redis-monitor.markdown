@@ -28,7 +28,8 @@ Momory 		| 								|
 			| used_memory 					| 由 Redis 分配器分配的内存总量, 以字节 (byte) 为单位
 			| used_memory_rss 				| 从操作系统的角度, 返回 Redis 已分配的内存总量 (俗称常驻集大小)
 			| mem_fragmentation_ratio 		| used_memory_rss 和 used_memory 之间的比率
-Persistence	| 								|		
+Persistence	| 								|	
+			|								|
 Stats 		| 								|
 			| total_commands_processed 		| 采集周期内执行命令总数
 			| rejected_connections 			| 采集周期内拒绝连接总数
@@ -38,11 +39,14 @@ Stats 		| 								|
 			| keyspace_misses 				| 采集周期内 Key 拒绝总数
 			| keyspace_hit_ratio 			| 访问命中率
 Replication | 								|
+			|								|
 CPU			| 								|
 			| used_cpu_sys 					| Redis 服务器耗费的系统 CPU
 			| used_cpu_user 				| Redis 服务器耗费的用户 CPU
 			| used_cpu_sys_children 		| 后台进程耗费的系统 CPU
 			| used_cpu_user_children 		| 后台进程耗费的用户 CPU
+Commandstats|								|
+			|								|		
 Keyspace	| 								|
 			| db0							|
 			| db1							|
@@ -57,6 +61,18 @@ Keyspace	| 								|
 	
 ***
 
+
+## 慢查询 SLOWLOG
+
+	SLOWLOG GET [N]
+
+	例如:
+		SLOWLOG GET
+		SLOWLOG GET 100
+		
+	...	
+	
+
 ## redis-cli --stat 实时统计
 
 	redis-cli --stat
@@ -70,7 +86,8 @@ keys      | mem      | clients | blocked | requests            | connections
 
 ***
 
-## redis-cli --bigkeys 采样分析
+
+## redis-cli --bigkeys 采样分析大对象
 
 	redis-cli --bigkeys
 	
@@ -78,7 +95,17 @@ keys      | mem      | clients | blocked | requests            | connections
 
 ***
 
+
 ## 更多监控等待挖掘...
+
+	**持久化阻塞**
+	**连接拒绝**
+	**命中率**
+	**CPU**
+	**内存**
+	**网络**
+	**磁盘**
+	**等待**
 
 ***
 

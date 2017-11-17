@@ -29,7 +29,7 @@ tags:
 		
 ## 配置参数设置
 			
-	1. slowlog-log-slower-than (预设阈值, 单位: 微妙, 默认 10000[10秒], [1秒 = 1000毫秒 = 1000000微妙])
+	1. slowlog-log-slower-than (预设阈值, 单位: 微妙, 默认 10000[10秒], [1秒 = 1000毫秒 = 1000000微秒])
 	
 		slowlog-log-slower-than 10000
 
@@ -59,14 +59,14 @@ tags:
 
 		1.1 redis.conf 配置文件配置
 		
-			slowlog-log-slower-than 1000
+			slowlog-log-slower-than 10000
 			
-			slowlog-max-len 1000
+			slowlog-max-len 128
 			
 		
 		1.2 命令配置
 	
-			CONFIG SET slowlog-log-slower-than 100 // 100毫秒
+			CONFIG SET slowlog-log-slower-than 10000 // 10000微秒, 10毫秒
 
 			CONFIG SET slowlog-max-len 1000 //1000 条
 			
@@ -78,7 +78,7 @@ tags:
 
 		CONFIG GET slowlog-max-len
 		
-	3. 查看慢查询日志列表
+	3. 查看慢查询日志列表 (耗时单位: 微秒)
 
 		SLOWLOG GET [N]
 
@@ -96,5 +96,52 @@ tags:
 		
 		
 ***
+
+## 排查思路 (Redis 内部原因)
+
+	1. info commandstats
+	
+		查看命令统计信息, 
+			注意是否用了时间复杂度为 O(N) 类似的命令, 比如 HGETALL, SMEMBERS 等等
+			注意 usec_pre_call 耗时是否合理, 单位: 微妙
+			
+	
+	2. API或者结构使用不合理
+		
+		2.1 KEYS *
+		
+		2.2 SORT
+		
+		2.3 List, Hash, Set, Sorted Set 单 KEY 内元素过大
+	
+			比如 SET 单 KEY 内元素几十几百万, 使用 SMEMBERS [时间复杂度 O(N)] 的时候, 就必然会导致慢查询
+			
+		2.4 ...	
+
+	3. 等等	
+
+			
 ***
+
+## 排查思路 (系统原因)
+
+	1. 系统 CPU 繁忙
+	
+	2. 内存交换
+		redis-cli -p 6379 info server | grep process_id
+			得到 process_id:12306
+			
+		cat /proc/12306/smaps | grep Swap
+			得到 Swap: 0 kB
+				 Swap: 4 kB
+				 
+			0 KB, 4KB 都是正常现象	 
+	
+	3. 磁盘过载
+		iotop
+		iostat -d -k
+	
+	4. 等等	
+	
+***	
 	
