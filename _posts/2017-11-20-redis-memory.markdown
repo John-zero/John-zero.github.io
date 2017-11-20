@@ -5,6 +5,7 @@ subtitle:     	"Redis 内存"
 date:         	2017-11-??
 author:       	"John-zero"
 header-img: 	"img/post-bg-android.jpg"
+catalog:      	true
 tags:
     - Redis
     - 缓存
@@ -97,7 +98,6 @@ Memory 		| 								|
 			最基本的出发点就是浪费一点空间还是牺牲一些时间的权衡
 			像 STL, tcmalloc, protobuf3的arena机制等采用的核心思路都是 "预分配迟回收"
 
-
 ***
 		
 ## 内存碎片		
@@ -108,7 +108,44 @@ Memory 		| 								|
 
 ***
 
-## 内存过载
+## 内存限制
+
+	Redis 默认是无限使用服务器内存
+
+	在 redis.conf 中 maxmemory 来限制内存, 
+	需要注意的是该值限制的只是 Redis 实际使用的内存量, 也就是 used_memory
+	由于内存碎片的存在, 实际消耗的内存可能远比 maxmemory 设置的更大.
+
+***
+
+## 内存回收策略
+	
+	删除到达过期时间的键对象
+		惰性删除: 客户端读取带有超时属性的键时会主动检查是否过期, 过期则删除该键并返回空
+		定时任务删除: 10秒运行间隔的定时任务, 根据键的过期比率和使用快慢两种速率模式回收键
+	
+***
+
+## 内存溢出控制策略	
+	内存所使用达到 maxmemory 上限时触发内存溢出的控制策略
+		在 redis.conf 中 maxmemory-policy 策略控制
+			noeviction: 默认策略, 不删除数据, 拒绝写响应读, 写返回 (error) OOM command not allowed when used memory
+			volatile-lru: 根据 LRU 算法删除设置了超时属性的键, 直到腾出足够空间为止
+				如果没有可删除的键对象, 回退到 noeviction 策略
+			allkeys-lru: 根据 LRU 算法删除键, 不管有没有设置超时属性, 直到腾出足够空间为止
+			allkeys-random: 随机删除所有键, 直到腾出足够空间为止			
+			volatile-random: 随机删除过期键, 直到腾出足够空间为止
+			volatile-ttl: 根据键值对象的 TTL 属性, 删除最近将要过期数据
+				如果没有可删除的键对象, 回退到 noeviction 策略
+			
+***
+
+## 内存优化
+	1. scan + object idletime 命令批量查询哪些键长时间未被访问, 然后对其进行删除清理
+	2. 压缩 KEY 和 VALUE
+		二进制压缩 (Google Protostuff, kryo, hessian)
+		JSON (压缩: Google Snappy, GZIP)
+		XML
 
 
 ***

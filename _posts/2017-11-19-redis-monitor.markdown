@@ -5,6 +5,7 @@ subtitle:     	"Redis 运维监控"
 date:         	2017-11-19
 author:       	"John-zero"
 header-img: 	"img/post-bg-android.jpg"
+catalog:      	true
 tags:
     - Redis
     - 缓存
