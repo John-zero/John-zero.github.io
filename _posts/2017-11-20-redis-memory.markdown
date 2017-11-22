@@ -2,7 +2,7 @@
 layout:     	post
 title:        	"Redis Memory"
 subtitle:     	"Redis 内存"
-date:         	2017-11-??
+date:         	2017-11-20
 author:       	"John-zero"
 header-img: 	"img/post-bg-android.jpg"
 catalog:      	true
@@ -12,25 +12,20 @@ tags:
 ---
 
 
+
 ## 内存监控
 
-**info 监控**
+**info 监控 (V4.01)**
 
  类型 		| 属性 | 描述
 ------------|-------------------------------|---------------------------------------------------------------------------
 Clients 	| 								|
 			| connected_clients 			| 已连接客户端的数量
-			|								|
-			|								|
 Memory 		| 								|
 			|								|
 			| used_memory 					| 由 Redis 分配器分配的内存总量, 以字节 (byte) 为单位
 			| used_memory_rss 				| 从操作系统的角度, 返回 Redis 已分配的内存总量 (俗称常驻集大小)
 			| mem_fragmentation_ratio 		| used_memory_rss 和 used_memory 之间的比率
-			|								|
-			|								|
-			|								|
-			|								|
 			
 	一般重点关注: used_memory, used_memory_rss, mem_fragmentation_ratio
 			
@@ -57,7 +52,6 @@ Memory 		| 								|
 		
 		oll 返回比较大的执行结果 (使用的是 列表 缓存), 比如 HGETALL, SMEMBERS 等
 		
-		
 	注意客户端存活状态
 		
 		age 客户端连接的时间
@@ -71,6 +65,11 @@ Memory 		| 								|
 
 	内存消耗主要包括: 自身内存 + 对象内存 + 缓冲内存 + 碎片内存.
 		而缓冲内存主要包括: 客户端缓冲, 复制积压缓冲区, AOF 缓冲区.
+		
+	键值对象
+		压缩, 精简设计, 序列化
+	缓冲区内存
+	内存碎片
 
 
 ***
@@ -146,7 +145,7 @@ Memory 		| 								|
 		二进制压缩 (Google Protostuff, kryo, hessian)
 		JSON (压缩: Google Snappy, GZIP)
 		XML
-
+	3. ...
 
 ***
 

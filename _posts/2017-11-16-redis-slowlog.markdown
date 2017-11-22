@@ -5,6 +5,7 @@ subtitle:     	""
 date:         	2017-11-16
 author:       	"John-zero"
 header-img: 	"img/post-bg-android.jpg"
+catalog:      	true
 tags:
     - Redis
     - 缓存

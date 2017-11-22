@@ -5,7 +5,7 @@ subtitle:   	"单机, 哨兵, 集群"
 date:       	2017-11-15
 author:       	"John-zero"
 header-img: 	"img/post-bg-js-module.jpg"
-catalog: 		false
+catalog: 		true
 tags:
     - Redis
     - 缓存

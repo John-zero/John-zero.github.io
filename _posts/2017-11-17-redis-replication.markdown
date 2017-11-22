@@ -5,6 +5,7 @@ subtitle:     	"Redis 主从复制"
 date:         	2017-11-17
 author:       	"John-zero"
 header-img: 	"img/post-bg-android.jpg"
+catalog:      	true
 tags:
     - Redis
     - 缓存
@@ -135,6 +136,16 @@ tags:
 	心跳频率在 redis.conf 中的 repl-ping-slave-period 10	
 
 ***	
+
+
+## 主从延伸
+
+	Redis Sentinel (哨兵)
+	Redis Cluster (集群)
+
+
+***
+	
 
 ## 应用场景
 

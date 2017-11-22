@@ -25,10 +25,33 @@ tags:
 Server 		| 								|
 Clients 	| 								|
 			| connected_clients 			| 已连接客户端的数量
+			| client_longest_output_list	|
+			| client_biggest_input_buf	 	|
+			| blocked_clients				|
 Memory 		| 								|
+			|								|
 			| used_memory 					| 由 Redis 分配器分配的内存总量, 以字节 (byte) 为单位
+			| used_memory_human				|
 			| used_memory_rss 				| 从操作系统的角度, 返回 Redis 已分配的内存总量 (俗称常驻集大小)
+			| used_memory_rss_human			| 
+			| used_memory_peak				|
+			| used_memory_peak_human		|
+			| used_memory_peak_perc			|
+			| used_memory_overhead			|
+			| used_memory_startup			|
+			| used_memory_dataset			|
+			| used_memory_dataset_perc		|
+			| total_system_memory			|
+			| total_system_memory_human		|
+			| used_memory_lua				|
+			| used_memory_lua_human			|
+			| maxmemory						|
+			| maxmemory_human				|
+			| maxmemory_policy				|
 			| mem_fragmentation_ratio 		| used_memory_rss 和 used_memory 之间的比率
+			| mem_allocator					|
+			| active_defrag_running	 		|
+			| lazyfree_pending_objects		|
 Persistence	| 								|	
 			|								|
 Stats 		| 								|
