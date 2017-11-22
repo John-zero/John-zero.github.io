@@ -5,7 +5,8 @@ subtitle:     "Redis 持久化"
 date:         2017-11-18
 author:       "John-zero"
 header-img:   "img/post-bg-android.jpg"
-catalog:      true
+catalog:      	true
+multilingual: 	false
 tags:
     - Redis
     - 缓存
