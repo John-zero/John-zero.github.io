@@ -209,7 +209,6 @@ tags:
 
 	Jedis 伪代码
 	
-	```java
 		private static JedisSentinelPool jedisSentinelPool;
 	
 		public synchronized static void initRedis (String masterName, Set<String> sentinels, int dbIndex)
@@ -281,8 +280,6 @@ tags:
 
 			return false;
 		}
-	
-	```
 
 
 ***
