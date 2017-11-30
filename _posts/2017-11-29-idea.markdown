@@ -1,20 +1,21 @@
 ---
 layout:     	post
-title:        	"IDEA"
-subtitle:     	"开发工具 IDEA"
+title:        	"IntelliJ IDEA"
+subtitle:     	"Java 开发工具 IntelliJ IDEA"
 date:         	2017-11-29
 author:       	"John-zero"
 header-img: 	"img/post-bg-os-metro.jpg"
 catalog:      	true
 multilingual: 	false
 tags:
-    - 开发工具
-	- IDEA
+    - Java 开发工具
+	- IntelliJ IDEA
 ---
 
 
 
 ## 下载, 安装, 破解
+
 * 下载
 	1. <a href="https://www.jetbrains.com/idea/download" target="_blank">Download</a> (UItimate 旗舰版, Community 社区版)
 * 安装
