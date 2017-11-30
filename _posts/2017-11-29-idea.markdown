@@ -14,7 +14,6 @@ tags:
 
 
 
-
 ## 下载, 安装, 破解
 * 下载
 	1. <a href="https://www.jetbrains.com/idea/download" target="_blank">Download</a> (UItimate 旗舰版, Community 社区版)
