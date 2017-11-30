@@ -2,7 +2,7 @@
 layout:     	post
 title:        	"Java Log"
 subtitle:     	"Java 日志"
-date:         	2017-11-30
+date:         	2017-11-23
 author:       	"John-zero"
 header-img: 	"img/post-bg-os-metro.jpg"
 catalog:      	true
@@ -11,7 +11,6 @@ tags:
     - Log
 	- 日志
 ---
-
 
 
 
