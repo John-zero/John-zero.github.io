@@ -1,15 +1,15 @@
 ---
 layout:     	post
-title:        	"Redis Cluster"
-subtitle:     	"Redis 集群"
-date:         	2017-11-23
+title:        	"Java Logging"
+subtitle:     	"Java 日志"
+date:         	2017-11-30
 author:       	"John-zero"
 header-img: 	"img/post-bg-android.jpg"
 catalog:      	true
 multilingual: 	false
 tags:
-    - Redis
-    - 缓存
+    - Java
+    - 日志
 ---
 
 
