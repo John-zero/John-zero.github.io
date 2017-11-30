@@ -2,9 +2,9 @@
 layout:     	post
 title:        	"Java Logging"
 subtitle:     	"Java 日志"
-date:         	2017-11-30 12:00:00
+date:         	2017-11-30
 author:       	"John-zero"
-header-img: 	"img/post-bg-android.jpg"
+header-img: 	"img/post-bg-os-metro.jpg"
 catalog:      	true
 multilingual: 	false
 tags:
@@ -97,7 +97,8 @@ tags:
 
 ![](/img/in-post/java-logging/java-logging-relationship-integration.png)
 
-	
+
+<!--
 													    |->  log4j-jcl  					-> 	Log4J 2
 																							-> 	Log4J 1
 	应用  ->  Apache Commons-Logging  -> 适配桥梁 ->	|->  slf4j-api, jcl-over-slf4j		-> 	Logback
@@ -114,9 +115,7 @@ tags:
 								|-> 	slf4j-simple	   ->	  simple	
 								|-> 	slf4j-nop	   	   ->	  NOP		
 								|-> 	slf4j-jcl	   	   ->	  Apache Commons-Logging
-		
-
-***
+-->
 
 
 		
