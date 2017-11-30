@@ -2,7 +2,7 @@
 layout:     	post
 title:        	"Java Logging"
 subtitle:     	"Java 日志"
-date:         	2017-11-30
+date:         	2017-11-30 12:00:00
 author:       	"John-zero"
 header-img: 	"img/post-bg-android.jpg"
 catalog:      	true
@@ -95,7 +95,7 @@ tags:
 > 参考: https://www.slf4j.org/manual.html
 
 
-![](img/in-post/java-logging/java-logging-relationship-integration.png)
+![](/img/in-post/java-logging/java-logging-relationship-integration.png)
 
 	
 													    |->  log4j-jcl  					-> 	Log4J 2
