@@ -95,7 +95,7 @@ tags:
 > 参考: https://www.slf4j.org/manual.html
 
 
-![集成关系图] (img/in-post/java-logging-relationship integration.png "图标")
+![](img/in-post/java-logging-relationship-integration.png)
 
 	
 													    |->  log4j-jcl  					-> 	Log4J 2
