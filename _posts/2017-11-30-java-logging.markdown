@@ -93,15 +93,19 @@ tags:
 ## **集成关系图** 
 
 > 参考: https://www.slf4j.org/manual.html
-	
-													   |->  log4j-jcl  					 -> 	Log4J 2
-																						 -> 	Log4J 1
-	应用  ->  Apache Commons-Logging  -> 适配桥梁 ->|->  slf4j-api, jcl-over-slf4j	-> 	   Logback
-																					     -> 	JDK-Logging
-													   |->  jcl-over-slf4j 			     ->  	SLF4j
 
-***																										
-									
+
+![集成关系图] (img/in-post/java-logging-relationship integration.png "图标")
+
+	
+													    |->  log4j-jcl  					-> 	Log4J 2
+																							-> 	Log4J 1
+	应用  ->  Apache Commons-Logging  -> 适配桥梁 ->	|->  slf4j-api, jcl-over-slf4j		-> 	Logback
+																							-> 	JDK-Logging
+													    |->  jcl-over-slf4j 			    ->  SLF4j
+
+--------------------------------------------------------------------------------------------------------------
+
 								|-> 	log4j-slf4j-impl   ->	  Log4J 2
 								|-> 	slf4j-log4j12	   -> 	  Log4J 1
 								|->		logback-classic	   -> 	  Logback					
