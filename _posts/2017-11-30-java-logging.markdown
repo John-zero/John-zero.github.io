@@ -1,15 +1,15 @@
 ---
 layout:     	post
 title:        	"Java Log"
-subtitle:     	"Redis 哨兵"
+subtitle:     	"Java 日志"
 date:         	2017-11-30
 author:       	"John-zero"
-header-img: 	"img/post-bg-android.jpg"
+header-img: 	"img/post-bg-os-metro.jpg"
 catalog:      	true
 multilingual: 	false
 tags:
-    - Redis
-    - 缓存
+    - Log
+	- 日志
 ---
 
 
