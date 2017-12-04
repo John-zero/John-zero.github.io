@@ -10,7 +10,6 @@ catalog:      	true
 multilingual: 	false
 tags:
     - Redis
-    - 缓存
 ---
 
 

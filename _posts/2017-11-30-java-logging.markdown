@@ -8,7 +8,6 @@ header-img: 	"img/post-bg-os-metro.jpg"
 catalog:      	true
 multilingual: 	false
 tags:
-    - Java
     - 日志
 ---
 

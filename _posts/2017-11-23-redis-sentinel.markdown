@@ -9,7 +9,6 @@ catalog:      	true
 multilingual: 	false
 tags:
     - Redis
-    - 缓存
 ---
 
 
@@ -21,6 +20,8 @@ tags:
 ## Sentinel 节点
 
 	Sentinel 节点本身就是独立的 Redis 节点. 只不过特殊一些, 不存储数据, 并且只支持部分命令.	
+	
+	比如支持: ping, sentinel, subscribe, unsubscribe, psubscribe, punsubscribe, publish, info, role, client, shutdown.
 	
 	默认使用 TCP 端口是 26379
 
