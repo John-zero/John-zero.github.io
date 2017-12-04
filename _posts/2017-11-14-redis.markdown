@@ -56,12 +56,12 @@ tags:
 
 	阿里云支持 256个 库
 	
-		<a href="https://help.aliyun.com/document_detail/57797.html" target="_blank">Redis 4.0、codis 、云数据库 Redis 版集群对比分析</a> 
+	<a href="https://help.aliyun.com/document_detail/57797.html" target="_blank">Redis 4.0、codis 、云数据库 Redis 版集群对比分析</a> 
 	
 	深度优化:
-			通过专门的探测端口来避免 Redis 单线程阻塞的影响
-			通过对磁盘、CPU、内存等硬件的检测提前发现故障隐患进行主动切换
-			优化原生的主备复制机制, 采用增量日志加内存 Buffer 的方式进行同步, 避免弱网(丢包, 延时)情况下主备复制频繁断开及全量同步
+			通过专门的探测端口来避免 Redis 单线程阻塞的影响 </br>
+			通过对磁盘、CPU、内存等硬件的检测提前发现故障隐患进行主动切换 </br>
+			优化原生的主备复制机制, 采用增量日志加内存 Buffer 的方式进行同步, 避免弱网(丢包, 延时)情况下主备复制频繁断开及全量同步 </br>
 			...
 
 ***
