@@ -168,5 +168,12 @@ tags:
 性能消耗比		| 低 (看配置)																| 高 (看配置)
 数据恢复速度	| 快																		| 慢
 
+***
+
+
+## 监控
+
+	fork 操作可能产生比较高的耗时, 可以通过 INFO 命令的 rdb_last_bgsave_time_sec 和 aof_last_rewrite_time_sec 属性
+
 
 ***

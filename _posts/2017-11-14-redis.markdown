@@ -50,11 +50,11 @@ tags:
 
 * <a href="https://www.qcloud.com/document/product/239/3205" target="_blank">腾讯云 Redis</a>  (基于 Grocery 兼容开源 Redis 协议的分布式云存储产品)
 
-	(腾讯云支持 16个 DB库)
+	(腾讯云支持 16个 DB库, 集群默认使用 0号 DB库)
 
 * <a href="https://help.aliyun.com/document_detail/26342.html" target="_blank">阿里云 Redis</a>
 
-	(阿里云支持 256个 DB库)
+	(阿里云支持 256个 DB库, 集群支持使用 多DB库 模式)
 	
 	<a href="https://help.aliyun.com/document_detail/57797.html" target="_blank">Redis 4.0、codis 、云数据库 Redis 版集群对比分析</a> 
 	
@@ -62,7 +62,7 @@ tags:
 	
 		通过专门的探测端口来避免 Redis 单线程阻塞的影响
 		通过对磁盘、CPU、内存等硬件的检测提前发现故障隐患进行主动切换
-		优化原生的主备复制机制, 采用增量日志加内存 Buffer 的方式进行同步, 避免弱网(丢包, 延时)情况下主备复制频繁断开及全量同步
+		优化原生的主备复制机制, 采用 Binlog 增量日志加内存 Buffer 的方式进行同步, 避免弱网(丢包, 延时)情况下主备复制频繁断开及全量同步
 		...
 
 ***
