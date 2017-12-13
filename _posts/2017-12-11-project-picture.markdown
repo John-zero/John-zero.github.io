@@ -20,11 +20,7 @@ tags:
 使用的 Google Java Library:	
 	
 	<!-- https://github.com/coobird/thumbnailator -->
-	https://github.com/coobird/thumbnailator
-	
 	<!-- https://mvnrepository.com/artifact/net.coobird/thumbnailator -->
-	https://mvnrepository.com/artifact/net.coobird/thumbnailator
-	
 	<dependency>
 		<groupId>net.coobird</groupId>
 		<artifactId>thumbnailator</artifactId>
@@ -35,7 +31,18 @@ tags:
 伪代码
 		
 ```java
-public enum ImageInfoEnum
+
+// 照片常量类
+public class PictureConstant
+{
+	
+	// 缩略图标识
+    public final static String THUMBNAIL = "thumbnail";
+
+}
+
+// 图片信息枚举
+public enum PictureInfoEnum
 {
 	SIZE, // 大小
 	WIDTH, // 宽度
@@ -43,17 +50,16 @@ public enum ImageInfoEnum
 	;
 }
 
-<!--
-/**
- * 图片信息
- * @param imagePath
- * @return
- */
--->
+
+//
+// 以下是 PictureUtils 类的函数
+//
+
+
 // 图片信息
-public static Map<ImageInfoEnum, Object> imageInfo (String imagePath)
+public static Map<PictureInfoEnum, Object> imageInfo (String imagePath)
 {
-	Map<ImageInfoEnum, Object> attribute = new HashMap<>();
+	Map<PictureInfoEnum, Object> attribute = new HashMap<>();
 	try
 	{
 		File imageFile = new File(imagePath);
@@ -71,15 +77,15 @@ public static Map<ImageInfoEnum, Object> imageInfo (String imagePath)
 		BufferedImage sourceImage = ImageIO.read(new FileInputStream(imageFile));
 
 		double imageSize = imageFile.length() / 1024.0; // 源图大小
-		attribute.put(ImageInfoEnum.SIZE, imageSize);
+		attribute.put(PictureInfoEnum.SIZE, imageSize);
 		logger.info(String.format("%s, 源图大小: %.1f", imagePath, imageSize));
 
 		int imageWidth = sourceImage.getWidth(); // 源图宽度
-		attribute.put(ImageInfoEnum.WIDTH, imageWidth);
+		attribute.put(PictureInfoEnum.WIDTH, imageWidth);
 		logger.info(String.format("%s, 源图宽度: %s", imagePath, imageWidth));
 
 		int imageHeight = sourceImage.getHeight(); // 源图高度
-		attribute.put(ImageInfoEnum.HEIGHT, imageHeight);
+		attribute.put(PictureInfoEnum.HEIGHT, imageHeight);
 		logger.info(String.format("%s, 源图高度: %s", imagePath, imageHeight));
 	}
 	catch (Exception e)
@@ -90,14 +96,6 @@ public static Map<ImageInfoEnum, Object> imageInfo (String imagePath)
 	return attribute;
 }
 
-<!--
-/**
- * 根据图片路径名称内部计算大小像素生成缩略图
- * @param sourcePath
- * @param targetPath
- * @return
- */
--->
 // 根据图片路径名称内部计算大小像素生成缩略图
 public static JSONObject thumbnail (String sourcePath, String targetPath)
 {
@@ -111,7 +109,7 @@ public static JSONObject thumbnail (String sourcePath, String targetPath)
 		File sourcePicture = new File(sourcePath);
 		File targetPicture = new File(targetPath);
 
-		Map<ImageInfoEnum, Object> attribute = imageInfo (sourcePicture);
+		Map<PictureInfoEnum, Object> attribute = imageInfo (sourcePicture);
 		if(attribute == null || attribute.isEmpty())
 		{
 			jsonObject.put("code", "failure");
@@ -121,51 +119,17 @@ public static JSONObject thumbnail (String sourcePath, String targetPath)
 
 		if(sourcePath.indexOf("_" + PictureConstant.THUMBNAIL) > -1) // 存在缩略图标识, 则直接返回图片全名称
 		{
-			try
-			{
-				Files.copy(sourcePicture, targetPicture);
-			}
-			catch (Exception e)
-			{
-				logger.error(String.format("%s 图片识别为缩略图, 直接拷贝作为缩略图...异常", sourcePath), e);
-
-				jsonObject.put("code",  "exception");
-				jsonObject.put("exception", e);
-
-				return jsonObject;
-			}
-
-			jsonObject.put("code", "copy");
-			jsonObject.put("message", String.format("%s 图片识别为缩略图, 直接拷贝作为缩略图...", sourcePath));
-
-			return jsonObject;
+			return pictureCopy (sourcePicture, targetPicture);
 		}
 
-		double imageSize = (double) attribute.get(ImageInfoEnum.SIZE);
-		if(imageSize < 1024.0D)
+		double imageSize = (double) attribute.get(PictureInfoEnum.SIZE);
+		if(imageSize < 1024.0D) // 图片大小小于阈值, 无须生成缩略图, 直接将原图拷贝作为缩略图
 		{
-			try
-			{
-				Files.copy(sourcePicture, targetPicture);
-			}
-			catch (Exception e)
-			{
-				logger.error(String.format("%s 图片大小在阈值内, 直接拷贝作为缩略图...异常", sourcePath), e);
-
-				jsonObject.put("code",  "exception");
-				jsonObject.put("exception", e);
-
-				return jsonObject;
-			}
-
-			jsonObject.put("code", "copy");
-			jsonObject.put("message", String.format("%s 图片大小在阈值内, 直接拷贝作为缩略图...", sourcePath));
-
-			return jsonObject;
+			return pictureCopy (sourcePicture, targetPicture);
 		}
 
-		int imageWidth = (int) attribute.get(ImageInfoEnum.WIDTH);
-		int imageHeight = (int) attribute.get(ImageInfoEnum.HEIGHT);
+		int imageWidth = (int) attribute.get(PictureInfoEnum.WIDTH);
+		int imageHeight = (int) attribute.get(PictureInfoEnum.HEIGHT);
 
 		int widthPixels, heightPixels;
 		int maxCommonDivisor = AlgorithmUtil.maxCommonDivisor(imageWidth, imageHeight);
@@ -190,7 +154,6 @@ public static JSONObject thumbnail (String sourcePath, String targetPath)
 
 		Thumbnails.of(sourcePicture).size(widthPixels, heightPixels).keepAspectRatio(true).toFile(targetPicture);
 
-
 		long endNano = System.nanoTime();
 
 		logger.info(String.format("根据图片路径名称 %s --> %s 内部计算大小像素生成缩略图耗时: %s", sourcePath, targetPath, (endNano - startNano) / 1000000));
@@ -202,6 +165,31 @@ public static JSONObject thumbnail (String sourcePath, String targetPath)
 
 		logger.error("根据图片路径名称内部计算大小像素生成缩略图 异常", e);
 	}
+
+	return jsonObject;
+}
+
+// 图片拷贝
+public static JSONObject pictureCopy (File sourcePicture, File targetPicture)
+{
+	JSONObject jsonObject = new JSONObject();
+
+	try
+	{
+		Files.copy(sourcePicture, targetPicture);
+	}
+	catch (Exception e)
+	{
+		logger.error(String.format("%s 直接拷贝作为缩略图...异常", sourcePicture.getPath()), e);
+
+		jsonObject.put("code",  "exception");
+		jsonObject.put("exception", e);
+
+		return jsonObject;
+	}
+
+	jsonObject.put("code", "copy");
+	jsonObject.put("message", String.format("%s 直接拷贝作为缩略图...", sourcePicture.getPath()));
 
 	return jsonObject;
 }
