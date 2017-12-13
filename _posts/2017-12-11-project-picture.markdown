@@ -55,143 +55,179 @@ public enum PictureInfoEnum
 // 以下是 PictureUtils 类的函数
 //
 
+import com.alibaba.fastjson.JSONObject;
+import com.example.constant.PictureConstant;
+import com.example.enums.PictureInfoEnum;
+import com.google.common.io.Files;
+import net.coobird.thumbnailator.Thumbnails;
+import org.slf4j.LoggerFactory;
 
-// 图片信息
-public static Map<PictureInfoEnum, Object> imageInfo (String imagePath)
+import javax.imageio.ImageIO;
+import java.awt.image.BufferedImage;
+import java.io.File;
+import java.io.FileInputStream;
+import java.util.HashMap;
+import java.util.Map;
+
+/**
+ * Created by John_zero on 2017/12/10.
+ */
+public class PictureUtil
 {
-	Map<PictureInfoEnum, Object> attribute = new HashMap<>();
-	try
+    private static final org.slf4j.Logger logger = LoggerFactory.getLogger(PictureUtil.class);
+
+    /**
+     * 图片信息
+     * @param imageFile
+     * @return
+     */
+	public static Map<PictureInfoEnum, Object> imageInfo (String imagePath)
 	{
-		File imageFile = new File(imagePath);
-		if(!imageFile.exists())
+		Map<PictureInfoEnum, Object> attribute = new HashMap<>();
+		try
 		{
-			logger.warn(String.format("%s 图片文件不存在...", imagePath));
-			return attribute;
+			File imageFile = new File(imagePath);
+			if(!imageFile.exists())
+			{
+				logger.warn(String.format("%s 图片文件不存在...", imagePath));
+				return attribute;
+			}
+			if(imageFile.isDirectory())
+			{
+				logger.warn(String.format("%s 非图片文件...", imagePath));
+				return attribute;
+			}
+
+			BufferedImage sourceImage = ImageIO.read(new FileInputStream(imageFile));
+
+			double imageSize = imageFile.length() / 1024.0; // 源图大小
+			attribute.put(PictureInfoEnum.SIZE, imageSize);
+			logger.info(String.format("%s, 源图大小: %.1f", imagePath, imageSize));
+
+			int imageWidth = sourceImage.getWidth(); // 源图宽度
+			attribute.put(PictureInfoEnum.WIDTH, imageWidth);
+			logger.info(String.format("%s, 源图宽度: %s", imagePath, imageWidth));
+
+			int imageHeight = sourceImage.getHeight(); // 源图高度
+			attribute.put(PictureInfoEnum.HEIGHT, imageHeight);
+			logger.info(String.format("%s, 源图高度: %s", imagePath, imageHeight));
 		}
-		if(imageFile.isDirectory())
+		catch (Exception e)
 		{
-			logger.warn(String.format("%s 非图片文件...", imagePath));
-			return attribute;
+			logger.error("图片信息, 异常", e);
 		}
 
-		BufferedImage sourceImage = ImageIO.read(new FileInputStream(imageFile));
-
-		double imageSize = imageFile.length() / 1024.0; // 源图大小
-		attribute.put(PictureInfoEnum.SIZE, imageSize);
-		logger.info(String.format("%s, 源图大小: %.1f", imagePath, imageSize));
-
-		int imageWidth = sourceImage.getWidth(); // 源图宽度
-		attribute.put(PictureInfoEnum.WIDTH, imageWidth);
-		logger.info(String.format("%s, 源图宽度: %s", imagePath, imageWidth));
-
-		int imageHeight = sourceImage.getHeight(); // 源图高度
-		attribute.put(PictureInfoEnum.HEIGHT, imageHeight);
-		logger.info(String.format("%s, 源图高度: %s", imagePath, imageHeight));
+		return attribute;
 	}
-	catch (Exception e)
+
+    /**
+     * 根据图片路径名称内部计算大小像素生成缩略图
+     * @param sourcePath
+     * @param targetPath
+     * @return
+     */
+	public static JSONObject thumbnail (String sourcePath, String targetPath)
 	{
-		logger.error("图片信息, 异常", e);
-	}
+		logger.info(String.format("源图片: %s, 目标缩略图: %s", sourcePath, targetPath));
 
-	return attribute;
-}
-
-// 根据图片路径名称内部计算大小像素生成缩略图
-public static JSONObject thumbnail (String sourcePath, String targetPath)
-{
-	logger.info(String.format("源图片: %s, 目标缩略图: %s", sourcePath, targetPath));
-
-	JSONObject jsonObject = new JSONObject();
-	try
-	{
-		long startNano = System.nanoTime();
-
-		File sourcePicture = new File(sourcePath);
-		File targetPicture = new File(targetPath);
-
-		Map<PictureInfoEnum, Object> attribute = imageInfo (sourcePicture);
-		if(attribute == null || attribute.isEmpty())
+		JSONObject jsonObject = new JSONObject();
+		try
 		{
-			jsonObject.put("code", "failure");
-			jsonObject.put("message", String.format("%s 图片属性获取失败, 导致无法生成缩略图...", sourcePath));
-			return jsonObject;
-		}
+			long startNano = System.nanoTime();
 
-		if(sourcePath.indexOf("_" + PictureConstant.THUMBNAIL) > -1) // 存在缩略图标识, 则直接返回图片全名称
-		{
-			return pictureCopy (sourcePicture, targetPicture);
-		}
+			File sourcePicture = new File(sourcePath);
+			File targetPicture = new File(targetPath);
 
-		double imageSize = (double) attribute.get(PictureInfoEnum.SIZE);
-		if(imageSize < 1024.0D) // 图片大小小于阈值, 无须生成缩略图, 直接将原图拷贝作为缩略图
-		{
-			return pictureCopy (sourcePicture, targetPicture);
-		}
+			Map<PictureInfoEnum, Object> attribute = imageInfo (sourcePicture);
+			if(attribute == null || attribute.isEmpty())
+			{
+				jsonObject.put("code", "failure");
+				jsonObject.put("message", String.format("%s 图片属性获取失败, 导致无法生成缩略图...", sourcePath));
+				return jsonObject;
+			}
 
-		int imageWidth = (int) attribute.get(PictureInfoEnum.WIDTH);
-		int imageHeight = (int) attribute.get(PictureInfoEnum.HEIGHT);
+			if(sourcePath.indexOf("_" + PictureConstant.THUMBNAIL) > -1) // 存在缩略图标识, 则直接返回图片全名称
+			{
+				return pictureCopy (sourcePicture, targetPicture);
+			}
 
-		int widthPixels, heightPixels;
-		int maxCommonDivisor = AlgorithmUtil.maxCommonDivisor(imageWidth, imageHeight);
-		if(maxCommonDivisor > 1) // 动态计算
-		{
-			widthPixels = imageWidth / maxCommonDivisor * 300;
-			heightPixels = imageHeight / maxCommonDivisor * 300;
+			double imageSize = (double) attribute.get(PictureInfoEnum.SIZE);
+			if(imageSize < 1024.0D) // 图片大小小于阈值, 无须生成缩略图, 直接将原图拷贝作为缩略图
+			{
+				return pictureCopy (sourcePicture, targetPicture);
+			}
 
-			// 如果动态计算后的像素大小超过原像素大小, 则保持原来的尺寸大小
-			if(widthPixels > imageWidth)
+			int imageWidth = (int) attribute.get(PictureInfoEnum.WIDTH);
+			int imageHeight = (int) attribute.get(PictureInfoEnum.HEIGHT);
+
+			int widthPixels, heightPixels;
+			int maxCommonDivisor = AlgorithmUtil.maxCommonDivisor(imageWidth, imageHeight);
+			if(maxCommonDivisor > 1) // 动态计算
+			{
+				widthPixels = imageWidth / maxCommonDivisor * 300;
+				heightPixels = imageHeight / maxCommonDivisor * 300;
+
+				// 如果动态计算后的像素大小超过原像素大小, 则保持原来的尺寸大小
+				if(widthPixels > imageWidth)
+					widthPixels = imageWidth;
+				if(heightPixels > imageHeight)
+					heightPixels = imageHeight;
+			}
+			else  // 原像素大小
+			{
 				widthPixels = imageWidth;
-			if(heightPixels > imageHeight)
 				heightPixels = imageHeight;
+			}
+
+			logger.info(String.format("根据图片路径名称 %s --> %s 内部计算缩略图大小像素: 宽: %s, 高: %s", sourcePath, targetPath, widthPixels, heightPixels));
+
+			Thumbnails.of(sourcePicture).size(widthPixels, heightPixels).keepAspectRatio(true).toFile(targetPicture);
+
+			long endNano = System.nanoTime();
+
+			logger.info(String.format("根据图片路径名称 %s --> %s 内部计算大小像素生成缩略图耗时: %s", sourcePath, targetPath, (endNano - startNano) / 1000000));
 		}
-		else  // 原像素大小
+		catch (Exception e)
 		{
-			widthPixels = imageWidth;
-			heightPixels = imageHeight;
+			jsonObject.put("code", "exception");
+			jsonObject.put("exception", e);
+
+			logger.error("根据图片路径名称内部计算大小像素生成缩略图 异常", e);
 		}
-
-		logger.info(String.format("根据图片路径名称 %s --> %s 内部计算缩略图大小像素: 宽: %s, 高: %s", sourcePath, targetPath, widthPixels, heightPixels));
-
-		Thumbnails.of(sourcePicture).size(widthPixels, heightPixels).keepAspectRatio(true).toFile(targetPicture);
-
-		long endNano = System.nanoTime();
-
-		logger.info(String.format("根据图片路径名称 %s --> %s 内部计算大小像素生成缩略图耗时: %s", sourcePath, targetPath, (endNano - startNano) / 1000000));
-	}
-	catch (Exception e)
-	{
-		jsonObject.put("code", "exception");
-		jsonObject.put("exception", e);
-
-		logger.error("根据图片路径名称内部计算大小像素生成缩略图 异常", e);
-	}
-
-	return jsonObject;
-}
-
-// 图片拷贝
-public static JSONObject pictureCopy (File sourcePicture, File targetPicture)
-{
-	JSONObject jsonObject = new JSONObject();
-
-	try
-	{
-		Files.copy(sourcePicture, targetPicture);
-	}
-	catch (Exception e)
-	{
-		logger.error(String.format("%s 直接拷贝作为缩略图...异常", sourcePicture.getPath()), e);
-
-		jsonObject.put("code",  "exception");
-		jsonObject.put("exception", e);
 
 		return jsonObject;
 	}
 
-	jsonObject.put("code", "copy");
-	jsonObject.put("message", String.format("%s 直接拷贝作为缩略图...", sourcePicture.getPath()));
+    /**
+     * 图片拷贝
+     * @param sourcePicture
+     * @param targetPicture
+     * @return
+     */
+	public static JSONObject pictureCopy (File sourcePicture, File targetPicture)
+	{
+		JSONObject jsonObject = new JSONObject();
 
-	return jsonObject;
+		try
+		{
+			Files.copy(sourcePicture, targetPicture);
+		}
+		catch (Exception e)
+		{
+			logger.error(String.format("%s 直接拷贝作为缩略图...异常", sourcePicture.getPath()), e);
+
+			jsonObject.put("code",  "exception");
+			jsonObject.put("exception", e);
+
+			return jsonObject;
+		}
+
+		jsonObject.put("code", "copy");
+		jsonObject.put("message", String.format("%s 直接拷贝作为缩略图...", sourcePicture.getPath()));
+
+		return jsonObject;
+	}
+	
 }
 ```	
 
