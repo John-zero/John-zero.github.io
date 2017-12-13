@@ -18,8 +18,13 @@ tags:
 单反拍摄高清无码照片大小3MB+, 导致 WEB 页面加载贼慢, 所以优化生成缩略图来代替.
 	
 使用的 Google Java Library:	
+	
 	<!-- https://github.com/coobird/thumbnailator -->
+	https://github.com/coobird/thumbnailator
+	
 	<!-- https://mvnrepository.com/artifact/net.coobird/thumbnailator -->
+	https://mvnrepository.com/artifact/net.coobird/thumbnailator
+	
 	<dependency>
 		<groupId>net.coobird</groupId>
 		<artifactId>thumbnailator</artifactId>
@@ -30,7 +35,6 @@ tags:
 伪代码
 		
 ```java
-
 public enum ImageInfoEnum
 {
 	SIZE, // 大小
@@ -39,11 +43,14 @@ public enum ImageInfoEnum
 	;
 }
 
+<!--
 /**
  * 图片信息
  * @param imagePath
  * @return
  */
+-->
+// 图片信息
 public static Map<ImageInfoEnum, Object> imageInfo (String imagePath)
 {
 	Map<ImageInfoEnum, Object> attribute = new HashMap<>();
@@ -83,12 +90,15 @@ public static Map<ImageInfoEnum, Object> imageInfo (String imagePath)
 	return attribute;
 }
 
+<!--
 /**
  * 根据图片路径名称内部计算大小像素生成缩略图
  * @param sourcePath
  * @param targetPath
  * @return
  */
+-->
+// 根据图片路径名称内部计算大小像素生成缩略图
 public static JSONObject thumbnail (String sourcePath, String targetPath)
 {
 	logger.info(String.format("源图片: %s, 目标缩略图: %s", sourcePath, targetPath));
@@ -195,12 +205,12 @@ public static JSONObject thumbnail (String sourcePath, String targetPath)
 
 	return jsonObject;
 }
-	
 ```	
 
 注意点:
 	
-	如果由于 Thumbnails 使用不当而导致出现异常, 容易出现 java.lang.OutOfMemoryError: Java heap space 内存溢出
+	如果由于 Thumbnails 使用不当而导致出现异常
+		容易出现 java.lang.OutOfMemoryError: Java heap space 内存溢出
 	
 常见异常:
 	
@@ -214,7 +224,7 @@ public static JSONObject thumbnail (String sourcePath, String targetPath)
 		at net.coobird.thumbnailator.Thumbnailator.createThumbnail(Unknown Source)
 		at net.coobird.thumbnailator.Thumbnails$Builder.toFile(Unknown Source)	
 		
-	这个大部分原因都是 width, height 不合理而导致的
+	这个大部分原因都是因为 width, height 设置不合理而导致的
 		
 ***
 
