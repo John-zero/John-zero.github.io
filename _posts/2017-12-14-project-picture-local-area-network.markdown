@@ -74,7 +74,6 @@ public class IntranetUtil
 
     private static final org.slf4j.Logger logger = LoggerFactory.getLogger(IntranetUtil.class);
 
-
     /**
      * 局域网 IP
      * @return
@@ -104,8 +103,6 @@ public class IntranetUtil
                     {
                         String host = splits[0].trim();
 
-//                        logger.info("内网HOST/IP: " + host);
-
                         ips.add(host);
                     }
                 }
@@ -133,6 +130,37 @@ public class IntranetUtil
         return ips;
     }
 
+    /**
+     * 当前系统 IP
+     * @return
+     */
+    public static List<String> currentSystemIP ()
+    {
+        List<String> ips = new ArrayList<>();
+
+        try
+        {
+            Enumeration<NetworkInterface> enumerations = NetworkInterface.getNetworkInterfaces();
+            while(enumerations.hasMoreElements())
+            {
+                NetworkInterface networkInterface = enumerations.nextElement();
+                Enumeration enumeration = networkInterface.getInetAddresses();
+                while (enumeration.hasMoreElements())
+                {
+                    InetAddress inetAddress = (InetAddress) enumeration.nextElement();
+
+                    ips.add(inetAddress.getHostAddress());
+                }
+            }
+        }
+        catch (Exception e)
+        {
+            logger.error("本机相关IP识别异常", e);
+        }
+
+        return ips;
+    }
+
 }
 ```
 ***
@@ -143,9 +171,7 @@ public class IntranetUtil
 	Spring Boot 项目
 	
 		一个标注了 @Component 的 ScheduledTasks.java 类 
-		
 		+ 
-		
 		在 SpringApplication.java 项目启动类增加 @EnableScheduling 即可
 
 
@@ -165,7 +191,12 @@ public class ScheduledTasks
         {
             List<String> ips = IntranetUtil.intranetIP();
             ips.stream().forEach(ip_host -> {
-                TCPClient.connect(ip_host, 2018);
+                // 正式环境下应该排除自己连接自己
+                if(!TCPConstant.LOCAL_HOSTS.contains(ip_host))
+                {
+                    if(!TCPServer.containsKeyByRemote(ip_host, TCPConstant.MANAGER_SERVER_PORT) && !TCPServer.containsKeyByLocal(ip_host, TCPConstant.MANAGER_SERVER_PORT))
+                        TCPClient.connect(ip_host, TCPConstant.MANAGER_SERVER_PORT);
+                }
             });
         }
         catch (Exception e)
@@ -175,7 +206,41 @@ public class ScheduledTasks
     }
 	
 }
+
+
+public class TCPConstant
+{
+    private static final org.slf4j.Logger logger = LoggerFactory.getLogger(TCPConstant.class);
+
+    // 本机 IP
+    public static final Set<String> LOCAL_HOSTS = new HashSet<>(IntranetUtil.currentSystemIP());
+
+    // 记录拒绝连接的 IP/HOST
+    public static final Set<String> DIRECT_REFUSE_CONNECTION_HOST = new HashSet<>();
+
+    // 照片管理系统 bind 服务端口
+    public static final int MANAGER_SERVER_PORT = 2018;
+
+}
 ```		
 		
 ***
+
+
+## 备注
+
+	部分代码可能不全, 请谅解.
+	
+	这些项目代码都是正式在用的, 非 DEMO 版本.
+	
+	代码是一环扣一环的, 所以就没有把其他非紧紧相关都贴上了. 
+	
+	当然, 我会尽力保持代码完整.
+	
+	提供的只是对该需求的某种解决思路方案.
+	
+	或许你也有更好更优的处理方案哈!!!
+	
+***
+
 		
