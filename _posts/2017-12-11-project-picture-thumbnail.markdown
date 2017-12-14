@@ -1,7 +1,7 @@
 ---
 layout:     	post
-title:        	"照片 Picture-Project"
-subtitle:     	"照片项目"
+title:        	"Picture-Project 之 缩略图"
+subtitle:     	"照片项目 之 缩略图"
 date:         	2017-12-11
 author:       	"John-zero"
 header-img: 	"img/post-bg-os-metro.jpg"
@@ -232,8 +232,10 @@ public class PictureUtil
 ```	
 
 注意点:
+
+	1. 生成缩略图非常耗时, 所以不建议频繁使用  
 	
-	如果由于 Thumbnails 使用不当而导致出现异常
+	2. 如果由于 Thumbnails 使用不当而导致出现异常
 		容易出现 java.lang.OutOfMemoryError: Java heap space 内存溢出
 	
 常见异常:
