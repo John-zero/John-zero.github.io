@@ -22,14 +22,15 @@ tags:
 
  类型 		| 属性 | 描述
 ------------|-------------------------------|---------------------------------------------------------------------------	
-Server 		| 								|
-Clients 	| 								|
-			| connected_clients 			| 已连接客户端的数量
-			| client_longest_output_list	|
-			| client_biggest_input_buf	 	|
-			| blocked_clients				|
-Memory 		| 								|
+Server 		| 服务器信息					|
 			|								|
+Clients 	| 客户端信息					|
+			| connected_clients 			| 已连接客户端的数量
+			| client_longest_output_list	| 当前所有输出缓冲区中队列队形个数的最大值
+			| client_biggest_input_buf	 	| 当前所有输入缓冲区中占用的最大容量
+			| blocked_clients				| 正在等待阻塞命令的客户端数量
+			|								|
+Memory 		| 内存信息						|
 			| used_memory 					| 由 Redis 分配器分配的内存总量, 以字节 (byte) 为单位
 			| used_memory_human				|
 			| used_memory_rss 				| 从操作系统的角度, 返回 Redis 已分配的内存总量 (俗称常驻集大小)
@@ -52,9 +53,11 @@ Memory 		| 								|
 			| mem_allocator					|
 			| active_defrag_running	 		|
 			| lazyfree_pending_objects		|
-Persistence	| 								|	
 			|								|
-Stats 		| 								|
+Persistence	| 持久化信息 					|	
+			| loading						| 是否在加载持久化文件, 0:否; 1:是
+			|								|
+Stats 		| 全局统计信息	 				|
 			| total_commands_processed 		| 采集周期内执行命令总数
 			| rejected_connections 			| 采集周期内拒绝连接总数
 			| expired_keys 					| 采集周期内过期 Key 总数
@@ -62,16 +65,18 @@ Stats 		| 								|
 			| keyspace_hits 				| 采集周期内 Key 命中总数	
 			| keyspace_misses 				| 采集周期内 Key 拒绝总数
 			| keyspace_hit_ratio 			| 访问命中率
-Replication | 								|
 			|								|
-CPU			| 								|
+Replication | 复制信息						|
+			|								|
+CPU			| CPU 消耗信息					|
 			| used_cpu_sys 					| Redis 服务器耗费的系统 CPU
 			| used_cpu_user 				| Redis 服务器耗费的用户 CPU
 			| used_cpu_sys_children 		| 后台进程耗费的系统 CPU
 			| used_cpu_user_children 		| 后台进程耗费的用户 CPU
-Commandstats|								|
+			|								|
+Commandstats| 命令统计信息					|
 			|								|		
-Keyspace	| 								|
+Keyspace	| 数据库键统计信息				|
 			| db0							|
 			| db1							|
 			| db...N						| keys=N,expires=N,avg_ttl=N (单位: 秒)
