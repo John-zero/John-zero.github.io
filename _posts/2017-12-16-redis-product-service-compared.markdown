@@ -15,19 +15,17 @@ tags:
 
 ## 对比涉及
 
-Redis 官方: https://redis.io/
+	Redis 官方: https://redis.io/
 
-腾讯云 Redis: https://www.qcloud.com/document/product/239/3205
+	腾讯云 Redis: https://www.qcloud.com/document/product/239/3205
+		基于 Grocery 兼容开源 Redis 协议的分布式云存储产品
+		
+	阿里云 Redis: https://help.aliyun.com/document_detail/26342.html
+		ApsaraDB for Redis 兼容开源 Redis 协议标准, 提供持久化的内存数据库服务, 当前支持兼容 Redis 3.2 的版本命令
 
-	基于 Grocery 兼容开源 Redis 协议的分布式云存储产品
-	
-阿里云 Redis: https://help.aliyun.com/document_detail/26342.html
-
-	ApsaraDB for Redis 兼容开源 Redis 协议标准, 提供持久化的内存数据库服务, 当前支持兼容 Redis 3.2 的版本命令
-
-<!--
-Amazon ElastiCache Redis: https://amazonaws-china.com/cn/elasticache/redis/
--->
+	<!--
+	Amazon ElastiCache Redis: https://amazonaws-china.com/cn/elasticache/redis/
+	-->
 	
 ***
 
@@ -79,6 +77,7 @@ Amazon ElastiCache Redis: https://amazonaws-china.com/cn/elasticache/redis/
 
 1. <a href="https://help.aliyun.com/document_detail/54961.html" target="_blank">使用限制</a>
 2. <a href="https://help.aliyun.com/document_detail/26356.html" target="_blank">支持的 Redis 命令</a>
+
 
 	EVAL 脚本 (对基于 Redis 实现 分布式锁 有所影响)
 		腾讯云 Redis 主从, 集群 暂时都不支持
