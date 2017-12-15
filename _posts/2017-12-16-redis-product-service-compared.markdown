@@ -79,9 +79,9 @@ tags:
 2. <a href="https://help.aliyun.com/document_detail/26356.html" target="_blank">支持的 Redis 命令</a>
 
 
-	EVAL 脚本 (对基于 Redis 实现 分布式锁 有所影响)
-		腾讯云 Redis 主从, 集群 暂时都不支持
-		阿里云 Redis 集群不支持, 但是 标准版 支持
+EVAL 脚本 (对基于 Redis 实现 分布式锁 有所影响)
+	腾讯云 Redis 主从, 集群 暂时都不支持
+	阿里云 Redis 集群不支持, 但是 标准版 支持
 	
 ***
 
