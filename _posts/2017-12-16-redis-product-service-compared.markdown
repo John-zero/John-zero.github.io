@@ -34,19 +34,17 @@ Amazon ElastiCache Redis: https://amazonaws-china.com/cn/elasticache/redis/
 
 ## 提供规格
 
-腾讯云 Redis:
-
-	1. 主从版 (容量上限 60G)
-	2. 容量型主从版 (容量 64G 到 384G)
-	3. 集群版 (维护中) (容量 无上限)
-	
-阿里云 Redis:
-
-	1. 标准版-单副本
-	2. 标准版-双副本
-	3. 集群版-双副本
-	4. 读写分离实例
-	5. 集群版-单副本
+	腾讯云 Redis:
+		1. 主从版 (容量上限 60G)
+		2. 容量型主从版 (容量 64G 到 384G)
+		3. 集群版 (维护中) (容量 无上限)
+		
+	阿里云 Redis:
+		1. 标准版-单副本
+		2. 标准版-双副本
+		3. 集群版-双副本
+		4. 读写分离实例
+		5. 集群版-单副本
 	
 ***
 
@@ -55,17 +53,17 @@ Amazon ElastiCache Redis: https://amazonaws-china.com/cn/elasticache/redis/
 
 腾讯云 Redis:
 
-	1. DB 库 16个, 0-15
-	2. 集群默认使用 0号 DB库
-	3. <a href="https://cloud.tencent.com/document/product/239/4059" target="_blank">主从版与集群版区别</a>
-	4. ...
+1. DB 库 16个, 0-15
+2. 集群默认使用 0号 DB库
+3. <a href="https://cloud.tencent.com/document/product/239/4059" target="_blank">主从版与集群版区别</a>
+4. ...
 	
 阿里云 Redis:
 
-	1. DB 库 256个, 0-255
-	2. 集群支持使用 多DB库 模式
-	3. <a href="https://help.aliyun.com/document_detail/57797.html" target="_blank">Redis 4.0、codis 、云数据库 Redis 版集群对比分析</a>
-	4. ...
+1. DB 库 256个, 0-255
+2. 集群支持使用 多DB库 模式
+3. <a href="https://help.aliyun.com/document_detail/57797.html" target="_blank">Redis 4.0、codis 、云数据库 Redis 版集群对比分析</a>
+4. ...
 	
 ***
 
@@ -74,19 +72,17 @@ Amazon ElastiCache Redis: https://amazonaws-china.com/cn/elasticache/redis/
 
 腾讯云 Redis:
 
-	1. <a href="https://cloud.tencent.com/document/product/239/4073" target="_blank">主从版使用限制</a>
-	2. <a href="https://cloud.tencent.com/document/product/239/11988" target="_blank">集群版使用限制</a>
+1. <a href="https://cloud.tencent.com/document/product/239/4073" target="_blank">主从版使用限制</a>
+2. <a href="https://cloud.tencent.com/document/product/239/11988" target="_blank">集群版使用限制</a>
 	
 阿里云 Redis:
 
-	1. <a href="https://help.aliyun.com/document_detail/54961.html" target="_blank">使用限制</a>
-	2. <a href="https://help.aliyun.com/document_detail/26356.html" target="_blank">支持的 Redis 命令</a>
+1. <a href="https://help.aliyun.com/document_detail/54961.html" target="_blank">使用限制</a>
+2. <a href="https://help.aliyun.com/document_detail/26356.html" target="_blank">支持的 Redis 命令</a>
 
-EVAL 脚本 (对基于 Redis 实现 分布式锁 有所影响)
-
-	腾讯云 Redis 主从, 集群 暂时都不支持
-	
-	阿里云 Redis 集群不支持, 但是 标准版 支持
+	EVAL 脚本 (对基于 Redis 实现 分布式锁 有所影响)
+		腾讯云 Redis 主从, 集群 暂时都不支持
+		阿里云 Redis 集群不支持, 但是 标准版 支持
 	
 ***
 
