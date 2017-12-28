@@ -40,12 +40,20 @@ tags:
 ***
 
 
+## 模板皮肤
+
+* <a href="http://color-themes.com/?view=index" target="_blank">(模板皮肤) Color Themes</a>
+
+***
+
+
 ## 部分命令
 
 命令组合 						| 作用简要描述
 --------------------------------|--------------------------------------------				
 Ctrl + D 						| 复制行
 Ctrl + Y 						| 删除行
+Ctrl + E						| 最近浏览的文件
 Ctrl + F						| 局部搜索
 Ctrl + Shift + F				| 全局搜索
 Ctrl + N						| 类查找				
