@@ -2,13 +2,13 @@
 layout:     	post
 title:        	"Apache Commons IO"
 subtitle:     	"IO 相关操作实用工具类"
-date:         	2017-12-127
+date:         	2017-12-27
 author:       	"John-zero"
 header-img: 	"img/post-bg-os-metro.jpg"
 catalog:      	true
 multilingual: 	false
 tags:
-    - Redis
+    - IO
 ---
 
 
