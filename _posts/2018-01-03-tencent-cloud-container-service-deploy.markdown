@@ -30,9 +30,23 @@ tags:
 		.sh 的脚本流程:
 			①. 先使用 Gradle/Maven 构建打包
 			②. Docker Build Imager (自定义 Dockerfile)
-			③. Docker Push Imager To Repositories (Docker Hub, 私有镜像仓库, 腾讯云镜像仓库, 阿里云镜像仓库 ...)
+			③. Docker Push Imager To Repositories 
+				(Docker Hub, 私有镜像仓库, 腾讯云镜像仓库, 阿里云镜像仓库 ...)
 			④. 调用 Kubernetes HTTP API 创建/更新 服务
 	
+***
+
+
+## 腾讯云容器服务-服务
+			
+![](/img/in-post/ccs-deploy/Cloud Container Service 流程.png)	
+	
+	
+	自建 WEB 服务其实就是封装腾讯云提供的 HTTP API 操作, 
+		对外(shell 脚本)暴露访问方式, 然后由该自建 WEB 服务访问腾讯云 ccs.api.qcloud.com 对应的 服务接口
+		
+	腾讯云 CCS, Kubernetes 是腾讯云的服务...
+
 ***
 
 
@@ -48,12 +62,6 @@ tags:
 		服务使用 HTTP API 操作.
 			自己折腾当然可以直接控制台一步一步的操作...
 			Jenkins 的话就走 HTTP API 来操作...
-			
-		![](/img/in-post/ccs-deploy/Cloud Container Service 流程.png)	
-	
-		自建 WEB 服务其实就是封装腾讯云提供的 HTTP API 操作
-		
-		腾讯云 CCS, Kubernetes 是腾讯云的服务...
 		
 	4. ...
 
@@ -61,7 +69,6 @@ tags:
 
 
 ## 相关文档
-
 
 	腾讯云容器服务
 		https://cloud.tencent.com/document/product/457
@@ -82,7 +89,4 @@ tags:
 
 ***
 
-
-
-
-		
+	
