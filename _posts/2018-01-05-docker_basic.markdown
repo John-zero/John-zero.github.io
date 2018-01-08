@@ -51,10 +51,41 @@ GitHub Docker Resources (Star: 1.2K +): https://github.com/hangyan/docker-resour
 ***
 
 
+## 涉及目录
+
+	/var/lib/docker
+		containers 目录: /var/lib/docker/containers
+		images 目录: /var/lib/docker/image
+		network 目录: /var/lib/docker/network
+		...
+	
+	/var/docker/packages
+	
+	/etc/docker/
+		配置文件: /etc/docker/daemon.json
+		KEY 文件: /etc/docker/key.json
+		...
+	...
+
+***
+
+
 ## Docker 命令
 
-	安装
-		CentOS 7 : sudo yum install -y docker
+	CentOS 7 安装 Docker
+		sudo yum install -y docker
+
+	Docker 开机自启
+		chkconfig docker on
+
+	Docker 手动启动
+		service docker start
+		
+	Docker 手动停止
+		service docker stop
+		
+	Docker 版本
+		docker version
 
 	参考 Docker base command : https://docs.docker.com/engine/reference/commandline/docker/
 
@@ -97,13 +128,15 @@ GitHub Docker Resources (Star: 1.2K +): https://github.com/hangyan/docker-resour
 
 ## DockerFile, Images, Containers 关系
 
-	编写 Dockerfile, 然后使用 Dockerfile 构建 Images, 然后使用 Images 运行成为 Containers. 
+	编写 Dockerfile, 然后基于 Dockerfile 构建 Images, 然后运行 Images 成为 Containers. 
 
 	使用 DockerFile 自动构建 Images
 		编写 Dockerfile 指令:
 			FROM, RUN, CMD, LABEL, MAINTAINER, EXPOSE, ENV, ADD, COPY, ENTRYPOINT, VOLUME, USER, WORKDIR, ...	
 		
-		参考 Dockerfile reference : https://docs.docker.com/engine/reference/builder/			
+		参考 Dockerfile reference : https://docs.docker.com/engine/reference/builder/		
+		GitHub Dockerfile : https://github.com/dockerfile
+		GitHub Dockerfile io : http://dockerfile.github.io/
 	
 	使用 docker build 构建 Images
 		docker build [OPTIONS] PATH | URL | -
@@ -128,4 +161,59 @@ GitHub Docker Resources (Star: 1.2K +): https://github.com/hangyan/docker-resour
 	DaoCloud 加速器: https://www.daocloud.io/mirror#accelerator-doc
 
 ***
+
+
+## 日志
+	
+	日志储存位置:
+		1. 容器内 (默认)
+		2. 挂载映射到物理磁盘
+		3. 日志收集平台
+		
+	日志类型:
+		1. 标准输出: stdout (正常标准输出), stderr (异常标准输出)
+			比如 Java 的 System.out.println(""); System.err.println(""); ...
+		2. 日志文件
+			比如 Log4j2 的 .log 磁盘文件日志
+			
+	Docker 日志驱动:
+		参考: https://docs.docker.com/engine/admin/logging/overview/#supported-logging-drivers
+		1. none
+		2. json-file (默认)
+		3. syslog
+		4. journald
+		5. gelf
+		6. ...
+
+	日志: 
+		Docker 守护进程日志
+			参考: 
+				https://docs.docker.com/engine/admin/#read-the-logs
+				https://docs.docker.com/engine/admin/logging/view_container_logs/
+				
+			CentOS:
+				journalctl -u docker.service
+				
+			docker service logs
+				参考: https://docs.docker.com/engine/reference/commandline/service_logs/
+			
+		Docker 容器日志
+			docker logs 容器ID/容器NAME (docker logs mysql)
+				参考: https://docs.docker.com/engine/reference/commandline/logs/
+			
+		应用日志
+			建议将日志收集到统一的日志平台, 不建议使用 标准输出
+			这里有两种方式:
+				参考: https://docs.docker.com/engine/admin/logging/gelf/
+				1. dockerd 作用于所有容器, 也就是改变默认配置
+					比如:
+						dockerd
+						  --log-driver gelf –-log-opt gelf-address=udp://1.2.3.4:12201 \
+				2. 作用于单个容器
+					比如:
+						docker run \
+						  --log-driver gelf –-log-opt gelf-address=udp://1.2.3.4:12201 \
+						  alpine echo hello world
+		
+***	
 	
