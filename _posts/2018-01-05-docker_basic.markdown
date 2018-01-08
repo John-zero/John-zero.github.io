@@ -89,7 +89,7 @@ Docker Hub: <a href="https://www.docker.com/" target="_blank">https://hub.docker
 
 Docker 中文社区: <a href="http://dockone.io/" target="_blank">http://dockone.io/</a>
 
-GitHub Docker Resources (Star: 1.2K +): https://github.com/hangyan/docker-resources
+GitHub Docker Resources (Star 1.2K +): <a href="https://github.com/hangyan/docker-resources" target="_blank">https://github.com/hangyan/docker-resources</a>
 	
 ***
 
@@ -207,8 +207,9 @@ GitHub Docker Resources (Star: 1.2K +): https://github.com/hangyan/docker-resour
 
 ## 加速器
 
-	阿里云 加速器: https://cr.console.aliyun.com/#/accelerator
-	DaoCloud 加速器: https://www.daocloud.io/mirror#accelerator-doc
+阿里云 加速器: <a href="https://cr.console.aliyun.com/#/accelerator" target="_blank">https://cr.console.aliyun.com/#/accelerator</a>
+
+DaoCloud 加速器: <a href="https://www.daocloud.io/mirror#accelerator-doc" target="_blank">https://www.daocloud.io/mirror#accelerator-doc</a>
 
 ***
 
@@ -256,14 +257,12 @@ GitHub Docker Resources (Star: 1.2K +): https://github.com/hangyan/docker-resour
 			这里有两种方式:
 				参考: https://docs.docker.com/engine/admin/logging/gelf/
 				1. dockerd 作用于所有容器, 也就是改变默认配置
-					比如:
-						dockerd
-						  --log-driver gelf –-log-opt gelf-address=udp://1.2.3.4:12201 \
+					dockerd
+					  --log-driver gelf –-log-opt gelf-address=udp://1.2.3.4:12201 \
 				2. 作用于单个容器
-					比如:
-						docker run \
-						  --log-driver gelf –-log-opt gelf-address=udp://1.2.3.4:12201 \
-						  alpine echo hello world
+					docker run \
+					  --log-driver gelf –-log-opt gelf-address=udp://1.2.3.4:12201 \
+					  alpine echo hello world
 		
 ***	
 	
