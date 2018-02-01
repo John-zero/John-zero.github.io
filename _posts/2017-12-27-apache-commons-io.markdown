@@ -16,11 +16,9 @@ tags:
 ## Apache Commons IO
 
 	官网主页
-	
 		http://commons.apache.org/proper/commons-io/
 		
 	User guide
-	
 		http://commons.apache.org/proper/commons-io/description.html
 	
 ***
@@ -189,17 +187,19 @@ FileAlterationMonitor fileAlterationMonitor = FileUtils.directoryMonitor(directo
 
 ```
 
-注意点: 在 FileAlterationListener 接口实现函数内必须使用 try-catch 捕获异常, 如果不然出现异常没有捕获会导致后续监听无效...
+注意点: 
+
+1. 在 FileAlterationListener 接口实现函数内必须使用 try-catch 捕获异常, 如果不然出现异常没有捕获会导致后续监听无效...
+
+2. 监听的文件夹或者文件路径如果是共享模式, 监听会失效, 对于共享模型下的文件夹或者文件请谨慎使用之...
 
 ***
 
 
 ## 其他
 
-其他几个相关领域就比较简单, 就没贴代码了哈...
+其他几个相关领域的使用就比较简单, 就没贴代码了哈...
 
 ***
 
-
-
-		
+	
