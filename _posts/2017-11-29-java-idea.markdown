@@ -26,6 +26,32 @@ tags:
 ***
 
 
+## 编码设置
+
+* 在 bin/idea.exe.vmoptions 或者 bin/idea64.exe.vmoptions 追加
+	-Dfile.encoding=UTF-8
+	
+* 文件编码
+	IDEA 界面操作: File –> Settings –> Editor –> File Encodings
+	Global Encoding: UTF-8
+	Project Encoding: UTF-8
+	Default encoding for properties files: UTF-8
+	
+***
+
+
+## 类文件头
+
+	IDEA 界面操作: File –> Settings –> Editor –> File and Code Templates –> Includes
+	
+	/**
+	 * @author ${USER}
+	 * @date ${DATE}
+	 */
+
+***	
+
+
 ## Plugins 插件
 
 	IDEA 界面操作: File --> Settings --> Plugins --> 搜索, 安装
