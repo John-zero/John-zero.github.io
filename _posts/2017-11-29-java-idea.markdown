@@ -20,9 +20,8 @@ tags:
 * 安装
 	1. 省略...
 * 破解 
-	1. IDEA 主界面, 选择 License server, 输入 http://idea.iteblog.com/key.php , 然后 Activate
-	2. <a href="http://blog.lanyus.com/archives/174.html" target="_blank">IntelliJ IDEA License Server 本地搭建教程</a>
-
+	1. <a href="http://blog.lanyus.com/archives/174.html" target="_blank">IntelliJ IDEA License Server 本地搭建教程</a>
+	
 ***
 
 
@@ -42,6 +41,17 @@ tags:
 	
 	Default encoding for properties files: UTF-8
 	
+***
+
+
+## 字体大小
+
+	IDEA 界面操作: File -> Settings -> Editor -> Colors & Fonts -> Font
+	
+	Size (字体大小)
+
+	Primary font (字体类型)
+
 ***
 
 
@@ -117,8 +127,6 @@ Terminal						| 命令行 (常用于 Git 命令)
 --------------------------------|--------------------------------------------
 不自动折叠一行代码				| File -> Settings -> Editor -> General -> Code Folding -> One-line methods (不勾选) 
 不隐藏空文件夹					| 1:Project (窗口) -> (右边) 小齿轮 -> Compact Empty Middle Fackages (不勾选)
-字体							| File -> Settings -> Editor -> Colors & Fonts -> Font -> Primary font (字体), Size (字体大小)
-编码							| File -> Settings -> File Encodings -> Default encoding for properties file -> UTF-8
 文件与目录结构同步				| 1:Project (窗口) -> (右边) 小齿轮 -> <br> &nbsp;&nbsp;&nbsp;&nbsp; Autoscroll to Source (√) <br> &nbsp;&nbsp;&nbsp;&nbsp; Autoscroll from Source (√) <br>
 @Depercated (废弃, 不推荐使用的方法) 默认只是加了中划线, 不显眼	| File -> Settings -> Editor -> Colors & Fonts -> General -> Errors and Warnings -> Deprecated symbol (设置 Background = FF5608 等)
 						 

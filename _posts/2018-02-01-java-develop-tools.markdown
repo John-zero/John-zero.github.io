@@ -58,7 +58,9 @@ Eclipse : <a href="https://www.eclipse.org/downloads/" target="_blank">Download<
 
 ## DB 工具
 
-Navicat Premium : <a href="https://www.navicat.com/en/products/navicat-premium" target="_blank">英文官网</a> <a href="http://www.navicat.com.cn/" target="_blank">中文官网</a> 
+MySQL Workbench (无须破解) : <a href="https://www.mysql.com/products/workbench/" target="_blank">Download</a>
+
+Navicat Premium (需要破解) : <a href="https://www.navicat.com/en/products/navicat-premium" target="_blank">英文官网</a> <a href="http://www.navicat.com.cn/" target="_blank">中文官网</a> 
 
 ***
 
@@ -90,7 +92,10 @@ Sublime Text : <a href="http://www.sublimetext.com/3" target="_blank">Download</
 Google 浏览器: <a href="http://www.google.cn/intl/zh-CN/chrome/" target="_blank">Download</a>
 
 Postman : <a href="https://www.getpostman.com/" target="_blank">Download</a>
-	
+
+Wappalyzer (网站技术分析插件) : <a href="https://www.wappalyzer.com" target="_blank">Download</a>
+
+
 ***	
 
 
