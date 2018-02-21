@@ -88,6 +88,8 @@ tags:
 		
 	任务计划, 调度 (Spring Cloud Task)	
 		GitHub: https://github.com/spring-cloud/spring-cloud-task
+		
+	...	
 
 ***
 
@@ -165,5 +167,7 @@ tags:
 <a href="http://www.ityouknow.com/spring-cloud.html">纯洁的微笑 - Spring Cloud 基础教程</a>
 
 <a href="https://segmentfault.com/n/1330000009887617" target="_blank">Java 微服务实战 - Spring Boot 系列</a> 
+
+...
 
 ***
