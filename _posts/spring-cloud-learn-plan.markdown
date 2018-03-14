@@ -35,6 +35,72 @@ tags:
 ***
 
 
+## Spring Boot 整合
+
+	Tomcat / Jetty
+
+	Log4j2 (日志)
+		Apache Log4j -> Java Logging -> Logback -> Apache Log4j2
+	
+	Swagger2 (API 文档)
+	
+	Thymeleaf (模板引擎: 传统 JSP, 中生代 Velocity, 后现代 Thymeleaf)
+	
+	Redis
+	
+	MyBatis (数据源: Druid) / Spring Data JPA (Hibernate)
+	
+	Actuator (单个应用监控)
+		参考: 
+			http://blog.didispace.com/spring-boot-actuator-1/
+	
+	Admin (Actuator 整合, 可视化 UI)
+		参考:
+			https://github.com/codecentric/spring-boot-admin
+	
+	MongoDB
+	
+	Kafka
+	
+	RabbitMQ
+	
+	Elasticsearch
+	
+	Shiro/Spring Security (安全)
+	
+	...
+
+***
+
+
+## Spring Boot 功能
+	
+	Servlet 容器
+		Apache Tomcat / Eclipse Jetty
+
+	过滤器
+	
+	拦截器
+	
+	验证
+	
+	配置
+	
+	定时任务
+	
+	邮件服务
+	
+	文件上传 (分布式文件系统: FastDFS)
+	
+	Jenkins
+	
+	测试
+	
+	...
+
+***
+
+
 ## 学习计划
 
 	项目构建 (Maven/Gradle)
@@ -90,66 +156,6 @@ tags:
 		GitHub: https://github.com/spring-cloud/spring-cloud-task
 		
 	...	
-
-***
-
-
-## Spring Boot 整合
-
-	Log4j2 (日志)
-		Apache Log4j -> Java Logging -> Logback -> Apache Log4j2
-	
-	Swagger2 (API 文档)
-	
-	Thymeleaf (模板引擎: 传统 JSP, 中生代 Velocity, 后现代 Thymeleaf)
-	
-	Redis
-	
-	MyBatis (数据源: Druid) / Spring Data JPA (Hibernate)
-	
-	MongoDB
-	
-	Kafka
-	
-	RabbitMQ
-	
-	Elasticsearch
-	
-	Shiro/Spring Security (安全)
-	
-	Actuator (单个应用监控)
-	
-	Admin (Actuator 整合, 可视化 UI)
-	
-	...
-
-***
-
-
-## Spring Boot 功能
-	
-	Servlet 容器
-		Apache Tomcat / Eclipse Jetty
-
-	过滤器
-	
-	拦截器
-	
-	验证
-	
-	配置
-	
-	定时任务
-	
-	邮件服务
-	
-	文件上传 (分布式文件系统: FastDFS)
-	
-	Jenkins
-	
-	测试
-	
-	...
 
 ***
 

@@ -1,0 +1,185 @@
+---
+layout:     	post
+title:        	"MongoDB"
+subtitle:     	"MongoDB 集成, 操作"
+date:         	2018-03-13
+author:       	"John-zero"
+header-img: 	"img/post-bg-os-metro.jpg"
+catalog:      	true
+multilingual: 	false
+tags:
+    - MongoDB
+---
+
+
+
+## 资料集成
+
+MongoDB 官网: <a href="https://www.mongodb.com" target="_blank">https://www.mongodb.com</a>
+
+MongoDB DOCS: <a href="https://docs.mongodb.com" target="_blank">https://docs.mongodb.com</a>
+
+MongoDB 中文社区: <a href="http://www.mongoing.com/" target="_blank">http://www.mongoing.com/</a>
+	
+***
+
+## 常规
+
+	MongoDB 访问: localhost:27017
+	
+	MongoDB WEB 访问: localhost:28017
+
+***
+
+## Spring Boot 集成
+	
+	pom.xml 引入依赖
+	
+		<dependency> 
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-data-mongodb</artifactId>
+		</dependency> 
+		
+			或者
+			
+		<dependency>
+			<groupId>org.springframework.data</groupId>
+			<artifactId>spring-data-mongodb</artifactId>
+		</dependency>
+		
+			参考: 
+				Spring Data MongoDB: http://projects.spring.io/spring-data-mongodb/
+
+---			
+
+	application.properties 配置
+
+		spring.data.mongodb.uri=mongodb://name:pass@localhost:27017/database
+
+---
+
+	模拟实体类
+	
+		import lombok.Data;
+
+		@Data
+		public class UserMO {
+		
+			public UserMO () {
+			
+			}
+		
+			public UserMO (String id, String name, int age, String phone) {
+				this.id = id;
+				this.name = name;
+				this.age = age;
+				this.phone = phone;
+			}
+
+			/**
+			 * 主键
+			 */
+			private String id;
+			/**
+			 * 姓名
+			 */
+			private String name;
+			/**
+			 * 年龄
+			 */
+			private ing age;
+			/**
+			 * 手机号
+			 */
+			private String phone;
+			/**
+			 * 卡牌库
+			 */
+			private List<CardMO> cards;
+			
+		}
+		
+		import lombok.Data;
+		
+		@Data
+		public class CardMO {
+		
+			public CardMO () {
+			
+			}
+		
+			public CardMO (String id, String name, int number) {
+				this.id = id;
+				this.name = name;
+				this.number = number;
+			}
+
+			/**
+			 * 主键
+			 */
+			private String id;
+			/**
+			 * 卡牌名称
+			 */
+			private String name;
+			/**
+			 * 数量
+			 */
+			private ing number;
+			
+		}
+	
+---
+		
+	基本操作
+	
+		参考: https://docs.mongodb.com/manual/reference/operator/
+		
+		@Autowired
+		private MongoTemplate mongoTemplate;
+		
+		增加
+			UserMO userMO = new UserMO("user-00", "贱贱", 27, "137 xxxx xxxx");
+			
+			userMO.getCards().add(new CardMO("card-cavalry-00", "骑兵", 1));
+			userMO.getCards().add(new CardMO("card-infantry-00", "步兵", 1));
+			userMO.getCards().add(new CardMO("card-archer-00", "弓箭手", 1));
+			
+			mongoTemplate.save(userMO);
+			
+		删除
+			mongoTemplate.remove(new Query(Criteria.where("id").is(userId)), UserMO.class);
+			
+		更新
+			Query query = new Query(Criteria.where("id").is(user.getId()));
+			Update update = new Update();
+			update.set("name", "小贱贱");
+			update.set("age", 28);
+			WriteResult writeResult = mongoTemplate.updateFirst(query, update, UserMO.class);
+			
+			更新 UserMO.cards 中的数据:
+				Query query = new Query(Criteria.where("id").is(userMO.getId()).and("cards.id").is(card.getId()));
+				Update update = new Update();
+				update.set(String.format("cards.$.%s", "id"), "card-cavalry-00");
+				update.set(String.format("cards.$.%s", "name"), "骑兵-00");
+				WriteResult writeResult = mongoTemplate.updateFirst(query, update, CardMO.class);
+			
+		查询
+			查询一条
+			UserMO userMO = mongoTemplate.findOne(new Query(Criteria.where("id").is(userId)), UserMO.class);
+			查询列表
+			List<UserMO> userMOs = mongoTemplate.find(new Query(Criteria.where("age").is(27)), UserMO.class);
+		
+***
+
+
+## 使用经验
+
+	1. 树形结构 (应用于 菜单, 组织架构 等)
+		Model Tree Structures: https://docs.mongodb.com/manual/applications/data-models-tree-structures/
+	
+***	
+
+
+
+		

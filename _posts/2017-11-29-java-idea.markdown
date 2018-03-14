@@ -133,6 +133,15 @@ Terminal						| 命令行 (常用于 Git 命令)
 ***
 
 
+## 文件操作回滚
+	
+	
+选中具体项目 --> 鼠标右键 --> Local History -> Show History	-> 按编辑时间找到需要文件进行回滚操作
+
+
+***
+
+
 ## Java, JDK 相关设置
 
 * JDK 设置
