@@ -129,7 +129,7 @@ Terminal						| 命令行 (常用于 Git 命令)
 不隐藏空文件夹					| 1:Project (窗口) -> (右边) 小齿轮 -> Compact Empty Middle Fackages (不勾选)
 文件与目录结构同步				| 1:Project (窗口) -> (右边) 小齿轮 -> <br> &nbsp;&nbsp;&nbsp;&nbsp; Autoscroll to Source (√) <br> &nbsp;&nbsp;&nbsp;&nbsp; Autoscroll from Source (√) <br>
 @Depercated (废弃, 不推荐使用的方法) 默认只是加了中划线, 不显眼	| File -> Settings -> Editor -> Colors & Fonts -> General -> Errors and Warnings -> Deprecated symbol (设置 Background = FF5608 等)
-						 
+历史修改记录					| 右键项目/文件/... -> Local History -> Show History -> 操作 (查看, 还原, ...)					 
 ***
 
 

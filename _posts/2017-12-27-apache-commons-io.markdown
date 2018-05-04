@@ -196,6 +196,15 @@ FileAlterationMonitor fileAlterationMonitor = FileUtils.directoryMonitor(directo
 ***
 
 
+## 扩展
+
+文件操作监听工具: <a href="http://file-leak-detector.kohsuke.org" target="_blank">http://file-leak-detector.kohsuke.org</a>
+
+文件上传(阿里云 OSS SDK, 各种骚操作): <a href="https://github.com/aliyun/aliyun-oss-java-sdk" target="_blank">https://github.com/aliyun/aliyun-oss-java-sdk</a>
+
+***
+
+
 ## 其他
 
 其他几个相关领域的使用就比较简单, 就没贴代码了哈...

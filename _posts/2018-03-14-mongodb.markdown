@@ -19,7 +19,7 @@ MongoDB 官网: <a href="https://www.mongodb.com" target="_blank">https://www.mo
 
 MongoDB DOCS: <a href="https://docs.mongodb.com" target="_blank">https://docs.mongodb.com</a>
 
-MongoDB 中文社区: <a href="http://www.mongoing.com/" target="_blank">http://www.mongoing.com/</a>
+Spring Data MongoDB DOCS: <a href="https://docs.spring.io/spring-data/data-mongo/docs/" target="_blank">https://docs.spring.io/spring-data/data-mongo/docs/</a> 
 	
 ***
 
@@ -169,6 +169,20 @@ MongoDB 中文社区: <a href="http://www.mongoing.com/" target="_blank">http://
 			UserMO userMO = mongoTemplate.findOne(new Query(Criteria.where("id").is(userId)), UserMO.class);
 			查询列表
 			List<UserMO> userMOs = mongoTemplate.find(new Query(Criteria.where("age").is(27)), UserMO.class);
+			
+		聚合
+	
+---
+
+
+------------|------------------------------------------------------------------------------------
+$lt			| <
+$lte		| <=
+$gt			| >	
+$gte		| >=
+$ne			| !=
+------------|------------------------------------------------------------------------------------
+	
 		
 ***
 
@@ -178,7 +192,34 @@ MongoDB 中文社区: <a href="http://www.mongoing.com/" target="_blank">http://
 	1. 树形结构 (应用于 菜单, 组织架构 等)
 		Model Tree Structures: https://docs.mongodb.com/manual/applications/data-models-tree-structures/
 	
+		我的实现结构选择的是: 
+			Model Tree Structures with Child References: https://docs.mongodb.com/manual/applications/data-models-tree-structures/
+			
+	2. 金额 类型 BigDecimal
+	
+		注意: 
+			2.1. 对于 BigDecimal 类型保存到 MongoDB 中是 字符串
+			2.2. BigDecimal 没有 空构造函数
+				AggregationResults<BigDecimal> aggregationResults = mongoTemplate.aggregate(aggregation, COLLECTION_NAME, BigDecimal.class);
+				这样会提示:
+					org.springframework.data.mapping.model.MappingInstantiationException: Failed to instantiate java.math.BigDecimal using constructor NO_CONSTRUCTOR with arguments
+			
+				
+			
+	
 ***	
+
+
+## 踩坑经验
+
+	1. 根据 CardMO 的 主键 ID 删除 UserMO 实体对象中 cards 中的 CardMO 数据
+		MongoDB 文档: https://docs.mongodb.com/manual/reference/operator/update/pull/
+		使用 Spring Data MongoDB 操作:
+			Query query = new Query(Criteria.where("id").is("1100004083497709568"));
+			Update update = new Update().pull("cards", new BasicDBObject("id", "1100487509678071808"));
+			WriteResult writeResult = mongoTemplate.updateMulti(query, update, UserMO.class);
+
+***
 
 
 
