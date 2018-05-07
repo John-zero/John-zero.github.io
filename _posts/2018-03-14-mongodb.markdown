@@ -176,6 +176,8 @@ Spring Data MongoDB DOCS: <a href="https://docs.spring.io/spring-data/data-mongo
 
 
 ------------|------------------------------------------------------------------------------------
+命令		| 代表含义
+------------|------------------------------------------------------------------------------------
 $lt			| <
 $lte		| <=
 $gt			| >	
@@ -219,6 +221,9 @@ $ne			| !=
 			Update update = new Update().pull("cards", new BasicDBObject("id", "1100487509678071808"));
 			WriteResult writeResult = mongoTemplate.updateMulti(query, update, UserMO.class);
 
+	2. 并发问题一定要注意
+		当涉及消费MQ消息操作MongoDB的时候, 一定要注意并发问题, 可以加分布式锁
+			
 ***
 
 
