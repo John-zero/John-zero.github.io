@@ -147,11 +147,12 @@ Spring Data MongoDB DOCS: <a href="https://docs.spring.io/spring-data/data-mongo
 			userMO.getCards().add(new CardMO("card-infantry-00", "步兵", 1));
 			userMO.getCards().add(new CardMO("card-archer-00", "弓箭手", 1));
 			
+			// save() 根据 _id 判断, 没有则插入, 有则覆盖
 			mongoTemplate.save(userMO);
+			
+			// insert() 根据 _id 判断, 没有则插入, 有则会抛错
 			mongoTemplate.insert(userMO);
 			
-			save() 根据 _id 判断, 没有则插入, 有则覆盖
-			insert() 根据 _id 判断, 没有则插入, 有则会抛错
 			
 		删除
 			mongoTemplate.remove(new Query(Criteria.where("id").is(userId)), UserMO.class);
@@ -192,8 +193,8 @@ Spring Data MongoDB DOCS: <a href="https://docs.spring.io/spring-data/data-mongo
 			查询列表
 				List<UserMO> userMOs = mongoTemplate.find(new Query(Criteria.where("age").is(27)), UserMO.class);
 			过滤属性不存在
-				Criteria criteria = Criteria.where("").is("");
-				criteria.and("managerUserId").is(new BasicDBObject("$exists", false));
+				Criteria criteria = Criteria.where("id").is(userId);
+				criteria.and("userId").is(new BasicDBObject("$exists", false));
 			List<UserMO> userMOs = mongoTemplate.find(new Query(criteria), UserMO.class);
 			
 		分页, 排序
@@ -203,52 +204,64 @@ Spring Data MongoDB DOCS: <a href="https://docs.spring.io/spring-data/data-mongo
 			// desc, asc
 			query.with(new Sort("desc", "id"));
 			query.skip(0).limit(20);
-			List<UserMO> userMOs = mongoTemplate.find(new Query(criteria), UserMO.class);
+			List<UserMO> userMOs = mongoTemplate.find(query, UserMO.class);
 		
 ---
 	
-		辅助小工具类
-		
-		import com.fasterxml.jackson.annotation.JsonIgnore;
+辅助小工具类
 
-		import java.lang.reflect.Field;
-		import java.util.HashMap;
-		import java.util.Map;
+	import com.fasterxml.jackson.annotation.JsonIgnore;
 
-		public class MongoHelper {
+	import java.lang.reflect.Field;
+	import java.util.HashMap;
+	import java.util.Map;
 
-			public static Map<String, Object> update (Object object) {
-				Map<String, Object> update = new HashMap<>();
+	public class MongoHelper {
 
-				try {
-					Field [] fields = object.getClass().getDeclaredFields();
-					for(Field field : fields) {
-						// 属性忽略
-						JsonIgnore jsonIgnore = field.getAnnotation(JsonIgnore.class);
-						if(jsonIgnore != null) {
-							continue;
-						}
+		public static Map<String, Object> update (Object object) {
+			Map<String, Object> update = new HashMap<>();
 
-						boolean isAccessible = field.isAccessible();
-						field.setAccessible(true);
-
-						String fieldName = field.getName();
-						Object fieldValue = field.get(object);
-						if(fieldName != null && fieldValue != null) {
-							update.put(fieldName, fieldValue);
-						}
-
-						field.setAccessible(isAccessible);
+			try {
+				Field [] fields = object.getClass().getDeclaredFields();
+				for(Field field : fields) {
+					// 属性忽略
+					JsonIgnore jsonIgnore = field.getAnnotation(JsonIgnore.class);
+					if(jsonIgnore != null) {
+						continue;
 					}
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
 
-				return update;
+					boolean isAccessible = field.isAccessible();
+					field.setAccessible(true);
+
+					String fieldName = field.getName();
+					Object fieldValue = field.get(object);
+					if(fieldName != null && fieldValue != null) {
+						update.put(fieldName, fieldValue);
+					}
+
+					field.setAccessible(isAccessible);
+				}
+			} catch (Exception e) {
+				e.printStackTrace();
 			}
 
+			return update;
 		}
+
+	}
 		
+---
+
+------------|------------------------------------------------------------------------------------
+命令		| 代表含义
+------------|------------------------------------------------------------------------------------
+$lt			| <
+$lte		| <=
+$gt			| >	
+$gte		| >=
+$ne			| !=
+------------|------------------------------------------------------------------------------------
+
 ---
 
 ***
@@ -272,7 +285,16 @@ Spring Data MongoDB DOCS: <a href="https://docs.spring.io/spring-data/data-mongo
 					org.springframework.data.mapping.model.MappingInstantiationException: Failed to instantiate java.math.BigDecimal using constructor NO_CONSTRUCTOR with arguments
 			
 	3. 过滤条件限制某个属性不存在
-		criteria.and("managerUserId").is(new BasicDBObject("$exists", false));
+		criteria.and("userId").is(new BasicDBObject("$exists", false));
+		
+	4. 日期类型
+		if (condition.getCreatedTimeFrom() != null && condition.getCreatedTimeTo() != null) {
+            criteria.and("createdTime").gte(condition.getCreatedTimeFrom()).lt(condition.getCreatedTimeTo());
+        } else if (condition.getCreatedTimeFrom() != null) {
+            criteria.and("createdTime").gte(condition.getCreatedTimeFrom());
+        } else if (condition.getCreatedTimeTo() != null) {
+            criteria.and("createdTime").lt(condition.getCreatedTimeTo());
+        }
 			
 ***	
 
@@ -289,8 +311,4 @@ Spring Data MongoDB DOCS: <a href="https://docs.spring.io/spring-data/data-mongo
 	2. 并发问题一定要注意
 		当涉及消费MQ消息操作MongoDB的时候, 一定要注意并发问题, 可以加分布式锁	
 			
-***
-
-
-
-		
+***	
