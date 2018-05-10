@@ -29,6 +29,28 @@ Spring Data MongoDB DOCS: <a href="https://docs.spring.io/spring-data/data-mongo
 	MongoDB 访问: localhost:27017
 	
 	MongoDB WEB 访问: localhost:28017
+	
+---
+
+	命令
+	
+		参考: 
+			https://docs.mongodb.com/manual/reference/operator/
+			https://docs.mongodb.com/manual/crud/
+			...
+		
+		show dbs;
+		
+		use admin;
+		
+		show collections;
+		
+		// userMO 文档
+		db.userMO.find();
+		db.userMO.find().count();
+		db.userMO.find({"_id" : ""}).count();
+		
+		...
 
 ***
 
@@ -134,8 +156,6 @@ Spring Data MongoDB DOCS: <a href="https://docs.spring.io/spring-data/data-mongo
 ---
 		
 	基本操作
-	
-		参考: https://docs.mongodb.com/manual/reference/operator/
 		
 		@Autowired
 		private MongoTemplate mongoTemplate;
@@ -289,12 +309,12 @@ $ne			| !=
 		
 	4. 日期类型
 		if (condition.getCreatedTimeFrom() != null && condition.getCreatedTimeTo() != null) {
-            criteria.and("createdTime").gte(condition.getCreatedTimeFrom()).lt(condition.getCreatedTimeTo());
-        } else if (condition.getCreatedTimeFrom() != null) {
-            criteria.and("createdTime").gte(condition.getCreatedTimeFrom());
-        } else if (condition.getCreatedTimeTo() != null) {
-            criteria.and("createdTime").lt(condition.getCreatedTimeTo());
-        }
+			criteria.and("createdTime").gte(condition.getCreatedTimeFrom()).lt(condition.getCreatedTimeTo());
+		} else if (condition.getCreatedTimeFrom() != null) {
+			criteria.and("createdTime").gte(condition.getCreatedTimeFrom());
+		} else if (condition.getCreatedTimeTo() != null) {
+			criteria.and("createdTime").lt(condition.getCreatedTimeTo());
+		}
 			
 ***	
 
