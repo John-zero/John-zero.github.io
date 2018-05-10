@@ -23,6 +23,7 @@ Spring Data MongoDB DOCS: <a href="https://docs.spring.io/spring-data/data-mongo
 	
 ***
 
+
 ## 常规
 
 	MongoDB 访问: localhost:27017
@@ -30,6 +31,7 @@ Spring Data MongoDB DOCS: <a href="https://docs.spring.io/spring-data/data-mongo
 	MongoDB WEB 访问: localhost:28017
 
 ***
+
 
 ## Spring Boot 集成
 	
@@ -95,7 +97,7 @@ Spring Data MongoDB DOCS: <a href="https://docs.spring.io/spring-data/data-mongo
 			/**
 			 * 卡牌库
 			 */
-			private List<CardMO> cards;
+			private List<CardMO> cards = new ArrayList<>();
 			
 		}
 		
@@ -146,15 +148,30 @@ Spring Data MongoDB DOCS: <a href="https://docs.spring.io/spring-data/data-mongo
 			userMO.getCards().add(new CardMO("card-archer-00", "弓箭手", 1));
 			
 			mongoTemplate.save(userMO);
+			mongoTemplate.insert(userMO);
+			
+			save() 根据 _id 判断, 没有则插入, 有则覆盖
+			insert() 根据 _id 判断, 没有则插入, 有则会抛错
 			
 		删除
 			mongoTemplate.remove(new Query(Criteria.where("id").is(userId)), UserMO.class);
 			
+			删除位于 cards 集合里面的数据 (updateMulti 是 更新多条)
+				Update update = new Update();
+				update.pull("cards", new BasicDBObject("id", cardMO.getId()));
+            mongoTemplate.updateMulti(new Query(Criteria.where("id").is(userId)), update, UserMO.class);
+				
 		更新
-			Query query = new Query(Criteria.where("id").is(user.getId()));
+			Query query = new Query(Criteria.where("id").is(userMO.getId()));
+			
+			// 复杂版 (就是每一个属性都手动 set)
 			Update update = new Update();
 			update.set("name", "小贱贱");
 			update.set("age", 28);
+			
+			// 简化版 (就是利用 Java 反射实现 set)
+			Update update = MongoHelper.update(userMO);
+			
 			WriteResult writeResult = mongoTemplate.updateFirst(query, update, UserMO.class);
 			
 			更新 UserMO.cards 中的数据:
@@ -163,29 +180,77 @@ Spring Data MongoDB DOCS: <a href="https://docs.spring.io/spring-data/data-mongo
 				update.set(String.format("cards.$.%s", "id"), "card-cavalry-00");
 				update.set(String.format("cards.$.%s", "name"), "骑兵-00");
 				WriteResult writeResult = mongoTemplate.updateFirst(query, update, CardMO.class);
+				
+			存在则更新, 不存在则增加
+				Update update = new Update();
+				update.addToSet("cards", cardMO);
+				WriteResult _writeResult = mongoTemplate.upsert(new Query(Criteria.where("id").is(userMO.getId())), update, UserMO.class);
 			
 		查询
 			查询一条
-			UserMO userMO = mongoTemplate.findOne(new Query(Criteria.where("id").is(userId)), UserMO.class);
+				UserMO userMO = mongoTemplate.findOne(new Query(Criteria.where("id").is(userId)), UserMO.class);
 			查询列表
-			List<UserMO> userMOs = mongoTemplate.find(new Query(Criteria.where("age").is(27)), UserMO.class);
+				List<UserMO> userMOs = mongoTemplate.find(new Query(Criteria.where("age").is(27)), UserMO.class);
+			过滤属性不存在
+				Criteria criteria = Criteria.where("").is("");
+				criteria.and("managerUserId").is(new BasicDBObject("$exists", false));
+			List<UserMO> userMOs = mongoTemplate.find(new Query(criteria), UserMO.class);
 			
-		聚合
+		分页, 排序
+			Query query = new Query(criteria);
+			int total = (int) mongoTemplate.count(query, UserMO.class);
+			
+			// desc, asc
+			query.with(new Sort("desc", "id"));
+			query.skip(0).limit(20);
+			List<UserMO> userMOs = mongoTemplate.find(new Query(criteria), UserMO.class);
+		
+---
 	
+		辅助小工具类
+		
+		import com.fasterxml.jackson.annotation.JsonIgnore;
+
+		import java.lang.reflect.Field;
+		import java.util.HashMap;
+		import java.util.Map;
+
+		public class MongoHelper {
+
+			public static Map<String, Object> update (Object object) {
+				Map<String, Object> update = new HashMap<>();
+
+				try {
+					Field [] fields = object.getClass().getDeclaredFields();
+					for(Field field : fields) {
+						// 属性忽略
+						JsonIgnore jsonIgnore = field.getAnnotation(JsonIgnore.class);
+						if(jsonIgnore != null) {
+							continue;
+						}
+
+						boolean isAccessible = field.isAccessible();
+						field.setAccessible(true);
+
+						String fieldName = field.getName();
+						Object fieldValue = field.get(object);
+						if(fieldName != null && fieldValue != null) {
+							update.put(fieldName, fieldValue);
+						}
+
+						field.setAccessible(isAccessible);
+					}
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+
+				return update;
+			}
+
+		}
+		
 ---
 
-
-------------|------------------------------------------------------------------------------------
-命令		| 代表含义
-------------|------------------------------------------------------------------------------------
-$lt			| <
-$lte		| <=
-$gt			| >	
-$gte		| >=
-$ne			| !=
-------------|------------------------------------------------------------------------------------
-	
-		
 ***
 
 
@@ -206,9 +271,9 @@ $ne			| !=
 				这样会提示:
 					org.springframework.data.mapping.model.MappingInstantiationException: Failed to instantiate java.math.BigDecimal using constructor NO_CONSTRUCTOR with arguments
 			
-				
+	3. 过滤条件限制某个属性不存在
+		criteria.and("managerUserId").is(new BasicDBObject("$exists", false));
 			
-	
 ***	
 
 
@@ -222,7 +287,7 @@ $ne			| !=
 			WriteResult writeResult = mongoTemplate.updateMulti(query, update, UserMO.class);
 
 	2. 并发问题一定要注意
-		当涉及消费MQ消息操作MongoDB的时候, 一定要注意并发问题, 可以加分布式锁
+		当涉及消费MQ消息操作MongoDB的时候, 一定要注意并发问题, 可以加分布式锁	
 			
 ***
 
